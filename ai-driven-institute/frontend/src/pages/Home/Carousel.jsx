@@ -1,6 +1,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import img1 from "../../assets/image/Hero_06.png"
+import img1 from "../../assets/image/Hero_06.jpg"
 import img2 from "../../assets/image/Hero_01.jpg"
 import img3 from "../../assets/image/Hero_02.jpg"
 import img4 from "../../assets/image/Hero_03.jpg"
