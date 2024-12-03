@@ -15,7 +15,6 @@ const InstituteDetails = () => {
     city: '',
     pincode: '',
     aisheCode: '',
-    applicationNo: '',
   });
 
   const handleInputChange = (e) => {
@@ -23,8 +22,6 @@ const InstituteDetails = () => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
-      applicationNo:
-        name === 'aisheCode' ? `${value.toUpperCase()}EN24${Math.random().toString().slice(2, 10)}` : prevData.applicationNo,
     }));
   };
 
@@ -46,7 +43,6 @@ const InstituteDetails = () => {
         city: '',
         pincode: '',
         aisheCode: '',
-        applicationNo: '',
       });
     } catch (error) {
       console.error('Error submitting data:', error);
@@ -160,16 +156,6 @@ const InstituteDetails = () => {
             className="w-full p-2 border border-gray-300 rounded-md"
             placeholder="Enter AISHE Code"
             required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Application Number:</label>
-          <input
-            type="text"
-            name="applicationNo"
-            value={formData.applicationNo}
-            readOnly
-            className="w-full p-2 border border-gray-300 rounded-md bg-gray-100"
           />
         </div>
         <button type="submit" className="text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-md">
