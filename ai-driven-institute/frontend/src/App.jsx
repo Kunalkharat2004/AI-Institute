@@ -1,4 +1,3 @@
-import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
 	ThemeProvider as MuiThemeProvider,
@@ -12,14 +11,13 @@ import LoginPage from "./pages/Auth/LoginPage.jsx";
 import Auth from "./components/layouts/Auth.jsx";
 import RegisterPage from "./pages/Auth/RegisterPage.jsx";
 import MainLayout from "./components/layouts/MainLayout.jsx";
-import Analysis from "./pages/Analysis/AnalysisPage.jsx";
-import Predict from "./pages/GroundWater/PredictPage.jsx";
-import Info from "./pages/Info/InfoPage.jsx";
-import About from "./pages/About/AboutPage.jsx";
 import Contact from "./pages/Contact/Contact.jsx";
-import OptimalGWSuggestor from "./pages/GroundWater/OptimalGWSuggestor.jsx";
 import Inspection from "./pages/Inspection/Inspection.jsx";
 import FeedbackPage from "./pages/Feedback/FeedbackPage.jsx";
+import ResetPasswordPage from "./pages/Auth/ResetPasswordPage.jsx";
+import AdminDashboard from "./pages/Admin/pages/AdminDashboard.jsx";
+import UserDashboardPage from "./pages/UserDashboard/UserDashboardPage.jsx";
+import FAQ from "./pages/FAQ/Faq.jsx";
 // import "./global.css";
 
 const theme = createTheme();
@@ -31,12 +29,15 @@ const router = createBrowserRouter([
 		element: <MainLayout />,
 		children: [
 			{ path: "home", element: <HomePage /> },
-			{ path: "info", element: <Info /> },
-			{ path: "about", element: <About /> },
+			{ path: "faq", element: <FAQ /> },
 			{ path: "contact", element: <Contact /> },
 			{ path: "feedback", element: <FeedbackPage /> },
 			{ path: "inspection", element: <Inspection /> },
 			{ path: "/", element: <HomePage />, index: true },
+			{
+				path: "/dashboard",
+				element: <UserDashboardPage/>
+			}
 		],
 	},
 	{
@@ -44,9 +45,15 @@ const router = createBrowserRouter([
 		element: <Auth />,
 		children: [
 			{ path: "login", element: <LoginPage /> },
+			{ path: "reset-password", element: <ResetPasswordPage /> },
 			{ path: "register", element: <RegisterPage /> },
 		],
 	},
+	{
+		path:"/admin/dashboard",
+		element: <AdminDashboard/>
+	},
+	
 ]);
 
 const App = () => {

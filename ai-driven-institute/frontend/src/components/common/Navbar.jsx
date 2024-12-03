@@ -11,11 +11,11 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 import useTokenStore from "../../store/userTokenStore";
-import { Link } from "react-router-dom";
-import MOEImage from "../../assets/image/ministry-of-education.png";
-import CGWBImage from "../../assets/image/cgwb-updated-logo.png";
+import { Link, useNavigate } from "react-router-dom";
+import AicteLgLogo from "../../assets/image/aicte-logo.png";
+import AicteSmLogo from "../../assets/image/aicte-sm-logo.png";
+import DigitalIndiaLogo from "../../assets/image/digital-india-logo.png";
 import SIHLogo from "../../assets/image/SIH-Logo.png";
 import sun from "../../assets/image/sun.png"; // Import sun icon
 import moon from "../../assets/image/moon.png"; // Import moon icon
@@ -23,17 +23,19 @@ import { useMediaQuery } from "@mui/material";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import { jwtDecode } from "jwt-decode";
 
 const pages = [
 	{ name: "Home", path: "/home" },
+	{ name: "Handbook", path: "https://aicte-india.org/sites/default/files/approval/APH%20Final.pdf" },
 	{ name: "Inspection", path: "/inspection" },
-	{ name: "Info", path: "/info" },
-	{ name: "About", path: "/about" },
-	{ name: "Contact", path: "/contact" },
+	{ name: "FAQ", path: "/faq" },
 	{ name: "Feedback", path: "/feedback" },
+	{ name: "Contact", path: "/contact" },
 ];
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
+
 
 const Navbar = () => {
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -41,7 +43,7 @@ const Navbar = () => {
 	const [theme, setTheme] = React.useState("light"); // State for theme
 
 	const isSmallScreen = useMediaQuery("(max-width:600px)"); // Adjust the breakpoint as needed
-
+	const isLargeScreen = useMediaQuery("(min-width:1180px)"); // Adjust the breakpoint as needed
 	const { token, setToken } = useTokenStore((state) => state);
 	React.useEffect(() => {
 		AOS.init({
@@ -49,6 +51,7 @@ const Navbar = () => {
 		});
 	});
 
+	const user = token ? jwtDecode(token): { email: "User" };
 	React.useEffect(() => {
 		const savedTheme = localStorage.getItem("theme") || "light";
 		setTheme(savedTheme);
@@ -64,6 +67,16 @@ const Navbar = () => {
 		document.body.classList.toggle("light-mode", newTheme === "light");
 	};
 
+	const navigate = useNavigate();
+
+	const handleMenuClick = (page)=>{
+		if(page.name === "Handbook"){
+			window.open(page.path, "_blank","noopener,noreferrer");
+		}else{
+			navigate(page.path);
+		}
+		handleCloseNavMenu();
+	}
 	const handleLogout = () => {
 		console.log("Logging out!..");
 		setToken("");
@@ -78,7 +91,7 @@ const Navbar = () => {
 	};
 
 	const handleDashboard = () => {
-		console.log("Dashboard clicked");
+		navigate("/dashboard");
 	};
 
 	const settingsHandlers = {
@@ -112,7 +125,8 @@ const Navbar = () => {
 				borderBottom: "1px solid #E0E0E0"
 			}}
 		>
-			<Container maxWidth="xl">
+			<Container maxWidth="2xl"
+			>
 				<Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
 					{/* Logo Section for Desktop */}
 					<Box
@@ -133,20 +147,28 @@ const Navbar = () => {
 							}}
 						>
 							<img
-								src={MOEImage}
-								alt="MOE Logo"
-								className="h-10 md:h-12 w-auto mt-2"
-							/>
-							<img
-								src={CGWBImage}
-								alt="CGWB Logo"
-								className="h-8 md:h-10 w-auto"
-							/>
-							<img
 								src={SIHLogo}
 								alt="SIH Logo"
 								className="h-8 md:h-12 w-auto"
 							/>
+								<img
+									src={DigitalIndiaLogo}
+									alt="CGWB Logo"
+									className="h-8 md:h-10 w-auto"
+								/>
+							{isLargeScreen?(
+								<img
+								src={AicteLgLogo}
+								alt="MOE Logo"
+								className="h-10 md:h-12 w-auto mt-2"
+							/>
+							):(
+								<img
+								src={AicteSmLogo}
+								alt="MOE Logo"
+								className="h-10 md:h-12 w-auto mt-2"
+							/>
+							)}
 						</Box>
 					</Box>
 
@@ -190,9 +212,7 @@ const Navbar = () => {
 								{pages.map((page) => (
 									<MenuItem
 										key={page.name}
-										onClick={handleCloseNavMenu}
-										component={Link}
-										to={page.path}
+										onClick={()=>handleMenuClick(page)}
 									>
 										<Typography sx={{ textAlign: "center" }}>
 											{page.name}
@@ -221,19 +241,19 @@ const Navbar = () => {
 							}}
 						>
 							<img
-								src={MOEImage}
-								alt="MOE Logo"
-								className="h-10 md:h-12 w-auto mt-2"
-							/>
-							<img
-								src={CGWBImage}
-								alt="CGWB Logo"
-								className="h-8 md:h-10 w-auto"
-							/>
-							<img
 								src={SIHLogo}
 								alt="SIH Logo"
 								className="h-8 md:h-12 w-auto"
+							/>
+								<img
+									src={DigitalIndiaLogo}
+									alt="CGWB Logo"
+									className="h-8 md:h-10 w-auto"
+								/>
+							<img
+								src={AicteSmLogo}
+								alt="MOE Logo"
+								className="h-10 md:h-10 w-auto mt-2"
 							/>
 						</Box>
 					</Box>
@@ -249,9 +269,7 @@ const Navbar = () => {
 						{pages.map((page) => (
 							<Button
 								key={page.name}
-								onClick={() => handleCloseNavMenu()}
-								component={Link}
-								to={page.path}
+								onClick={() => handleMenuClick(page)}
 								sx={{
 									color: theme === "light" ? "black" : "white",
 									mx: 1,
@@ -315,12 +333,14 @@ const Navbar = () => {
 							<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 								<Avatar
 									alt="User"
-									src="/static/images/avatar/2.jpg"
 									sx={{
+										bgcolor: "secondary.main",
 										width: isSmallScreen ? 32 : 40,
 										height: isSmallScreen ? 32 : 40,
 									}}
-								/>
+								>
+									{user.email[0].toUpperCase()}
+									</Avatar>
 							</IconButton>
 						</Tooltip>
 						<Menu

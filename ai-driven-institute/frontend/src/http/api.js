@@ -11,6 +11,9 @@ const api = axios.create({
 export const login = async (data) => {
 	return api.post("/users/login", data);
 };
+export const resetPassword = async (data) => {
+	return api.post("/users/reset-password", data);
+};
 export const register = async (data) => {
 	return api.post("/users/register", data);
 };

@@ -4,11 +4,11 @@ import Navbar from "../common/Navbar";
 import { Navigate, Outlet } from "react-router-dom";
 
 const MainLayout = () => {
-	// const { token } = useTokenStore((state) => state);
+	const { token } = useTokenStore((state) => state);
 
-	// if (!token) {
-	// 	return <Navigate to={"/auth/login"} replace />;
-	// }
+	if (!token) {
+		return <Navigate to={"/auth/login"} replace />;
+	}
 
 	return (
 		<>

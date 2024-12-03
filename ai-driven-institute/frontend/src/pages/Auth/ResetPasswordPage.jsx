@@ -2,22 +2,19 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { styled } from "@mui/system";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../../http/api";
+import {  resetPassword } from "../../http/api";
 import { useNavigate } from "react-router-dom";
-import useTokenStore from "../../store/userTokenStore";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 function Copyright() {
 	return (
@@ -53,70 +50,62 @@ const StyledButton = styled(Button)(({ theme }) => ({
 	margin: theme.spacing(3, 0, 2),
 }));
 
-export default function LoginPage() {
+export default function ResetPasswordPage() {
 	const emailRef = useRef("");
-	const passwordRef = useRef("");
-	const [rememberMe, setRememberMe] = useState(false);
-
-	const setToken = useTokenStore((state) => state.setToken);
+	const newPasswordRef = useRef("");
+	const confirmNewPasswordRef = useRef("");
 
 	const navigate = useNavigate();
 
 	const mutation = useMutation({
-		mutationFn: login,
-		onSuccess: (response) => {
-			const token = response.data.access_token;
-			setToken(token);
-			toast.success("Login successfull!", {
+		mutationFn: resetPassword,
+		onSuccess: () => {
+			toast.success("Password updated successfully!", {
 				autoClose: 3000,
 			});
-			navigate("/");
+			navigate("/auth/login");
 		},
 		onError: () => {
-			toast.error("Incorrect email or password", {
-				autoClose: 4000,
+			toast.error("Password doesn't matches!", {
+				autoClose: 3000,
 			});
 		},
 	});
 
 	const handleOnSubmit = (e) => {
 		e.preventDefault();
-		if (!emailRef.current.value || !passwordRef.current.value) {
-			toast.error("Please fill email and password!", {
+        const email = emailRef.current.value;
+		const confirmNewPassword = confirmNewPasswordRef.current.value;
+		const newPassword = newPasswordRef.current.value;
+		if (!email || !confirmNewPassword || !newPassword) {
+			toast.error("Please provide all the fields", {
 				autoClose: 4000,
 			});
 			return;
 		}
-
+        if(newPassword !== confirmNewPassword){
+            toast.error("Password doesn't match",
+                {
+                    autoClose: 4000
+                }
+            )
+            return;
+        }
 		
-		const email = emailRef.current.value;
-		const password = passwordRef.current.value;
-
-		// Check if admin credentials are provided
-		if(email === "admin@gmail.com" && password === "admin"){
-			localStorage.setItem("auth-token", "admin");
-			navigate("/admin/dashboard");
-		}
-
-		mutation.mutate({ email, password });
+		mutation.mutate({ email, newPassword,confirmNewPassword });
 	};
 
-	const handleRememberMe = (e) => {
-		setRememberMe(e.target.checked);
-		if (!e.target.checked) {
-			localStorage.removeItem("auth-token"); // If the user don't click on remember me btn or once clicked an unclick it.
-		}
-	};
+	
 	return (
 		<StyledContainer component="main" maxWidth="xs">
 			<CssBaseline />
 			<div>
 				<Box sx={{ display: "flex", alignItems: "center" }}>
 					<StyledAvatar>
-						<LockOutlinedIcon />
+						<LockOutlinedIcon/>
 					</StyledAvatar>
 					<Typography component="h1" variant="h5">
-						Sign in
+						Reset Password
 					</Typography>
 				</Box>
 				<StyledForm noValidate>
@@ -132,29 +121,32 @@ export default function LoginPage() {
 						autoComplete="email"
 						autoFocus
 					/>
+					
 					<TextField
 						variant="outlined"
 						margin="normal"
 						required
 						fullWidth
-						name="password"
-						inputRef={passwordRef}
-						label="Password"
+						name="newPassword"
+						inputRef={newPasswordRef}
+						label="New Password"
 						type="password"
-						id="password"
-						autoComplete="current-password"
+						id="new_password"
+						autoComplete="new-password"
 					/>
-					<FormControlLabel
-						control={
-							<Checkbox
-								value="remember"
-								color="primary"
-								checked={rememberMe}
-								onChange={handleRememberMe}
-							/>
-						}
-						label="Remember me"
+					<TextField
+						variant="outlined"
+						margin="normal"
+						required
+						fullWidth
+						name="confirmNewPassword"
+						inputRef={confirmNewPasswordRef}
+						label="Confirm New Password"
+						type="password"
+						id="confirm_new_password"
+						autoComplete="new-password"
 					/>
+					
 					<StyledButton
 						type="submit"
 						fullWidth
@@ -162,26 +154,17 @@ export default function LoginPage() {
 						color="primary"
 						onClick={handleOnSubmit}
 					>
-						Sign In
+						Confirm
 					</StyledButton>
-
-					
-			
-					<Grid container>
-						<Grid item xs>
-							<Link href="/auth/reset-password" variant="body2">
-								Forgot password?
-							</Link>
-						</Grid>
-						<Grid item>
-							<Link href="/auth/register" variant="body2">
-								{"Don't have an account? Sign Up"}
-							</Link>
-						</Grid>
-					</Grid>
 				</StyledForm>
+                <div className="mt-4">
+                    <Link href="/auth/login" variant="body2" className="flex items-center gap-2">
+                    <IoMdArrowRoundBack className="text-primary" size="20px"/>
+                        {"Back to login"}
+                    </Link>
+                </div>
 			</div>
-			<Box mt={8}>
+			<Box mt={2}>
 				<Copyright />
 			</Box>
 			<ToastContainer />

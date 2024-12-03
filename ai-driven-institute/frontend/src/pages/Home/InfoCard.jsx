@@ -4,7 +4,7 @@ import "aos/dist/aos.css";
 import img from "../../assets/image/QA_engineers.gif"; // Consider updating this image to one that aligns with the AI-driven inspection theme
 import { FaRobot, FaFileAlt, FaChartBar } from "react-icons/fa";
 
-function MapCardContainer() {
+function InfoCard() {
 	useEffect(() => {
 		AOS.init({
 			duration: 1000,
@@ -50,4 +50,4 @@ function MapCardContainer() {
 	);
 }
 
-export default MapCardContainer;
+export default InfoCard;

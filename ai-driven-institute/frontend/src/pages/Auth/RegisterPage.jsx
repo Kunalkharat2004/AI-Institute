@@ -33,8 +33,7 @@ function Copyright() {
 const theme = createTheme();
 
 export default function SignUp() {
-	const firstNameRef = useRef(null);
-	const lastNameRef = useRef(null);
+
 	const emailRef = useRef(null);
 	const passwordRef = useRef(null);
 
@@ -57,18 +56,17 @@ export default function SignUp() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 
-		const firstName = firstNameRef.current.value;
-		const lastName = lastNameRef.current.value;
+	
 		const email = emailRef.current.value;
 		const password = passwordRef.current.value;
 
-		if (!email || !password || !firstName || !lastName) {
+		if (!email || !password ) {
 			toast.error("Please fill all fields!", {
 				autoClose: 4000,
 			});
 			return;
 		}
-		mutation.mutate({ email, password, firstName, lastName });
+		mutation.mutate({ email, password});
 	};
 
 	return (
@@ -98,29 +96,6 @@ export default function SignUp() {
 						sx={{ mt: 3 }}
 					>
 						<Grid container spacing={2}>
-							<Grid item xs={12} sm={6}>
-								<TextField
-									inputRef={firstNameRef}
-									autoComplete="fname"
-									name="firstName"
-									required
-									fullWidth
-									id="firstName"
-									label="First Name"
-									autoFocus
-								/>
-							</Grid>
-							<Grid item xs={12} sm={6}>
-								<TextField
-									inputRef={lastNameRef}
-									required
-									fullWidth
-									id="lastName"
-									label="Last Name"
-									name="lastName"
-									autoComplete="lname"
-								/>
-							</Grid>
 							<Grid item xs={12}>
 								<TextField
 									inputRef={emailRef}
@@ -154,19 +129,8 @@ export default function SignUp() {
 									Sign Up
 								</Button>
 							</Grid>
-							<Grid item xs={12}>
-								<Typography sx={{ textAlign: "center" }}>OR</Typography>
-							</Grid>
-							<Grid item xs={12}>
-								<GoogleButton
-									style={{ width: "100%" }} // This ensures the button takes up the full width of the container
-									onClick={() => {
-										console.log("Google button clicked");
-									}}
-								/>
-							</Grid>
 						</Grid>
-						<Grid container justifyContent="flex-end" sx={{ mt: 2 }}>
+						<Grid container justifyContent="center" sx={{ mt: 2 }}>
 							<Grid item>
 								<Link href="/auth/login" variant="body2">
 									Already have an account? Sign in

@@ -5,7 +5,7 @@ import img from "../../assets/image/AI_inspection.jpg";
 import { FaRobot } from "react-icons/fa"; // Use an AI-related icon
 import { useNavigate } from "react-router-dom";
 
-const OptimalGWCardContainer = () => {
+const InspectionContainer = () => {
 	useEffect(() => {
 		AOS.init({
 			duration: 1000,
@@ -39,7 +39,7 @@ const OptimalGWCardContainer = () => {
 						onClick={handleButtonClick}
 						data-aos={"fade-up"}
 					>
-						Learn More About Our System
+						Get Started with Inspection
 					</button>
 				</div>
 
@@ -56,4 +56,4 @@ const OptimalGWCardContainer = () => {
 	);
 };
 
-export default OptimalGWCardContainer;
+export default InspectionContainer;
