@@ -4,9 +4,9 @@ import Navbar from "../common/Navbar";
 import { Navigate, Outlet } from "react-router-dom";
 
 const MainLayout = () => {
-	const { token } = useTokenStore((state) => state);
+	const { erpToken } = useTokenStore((state) => state);
 
-	if (!token) {
+	if (!erpToken) {
 		return <Navigate to={"/auth/login"} replace />;
 	}
 

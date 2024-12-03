@@ -58,7 +58,7 @@ export default function LoginPage() {
 	const passwordRef = useRef("");
 	const [rememberMe, setRememberMe] = useState(false);
 
-	const setToken = useTokenStore((state) => state.setToken);
+	const setErptoken = useTokenStore((state) => state.setErptoken);
 
 	const navigate = useNavigate();
 
@@ -66,7 +66,7 @@ export default function LoginPage() {
 		mutationFn: login,
 		onSuccess: (response) => {
 			const token = response.data.access_token;
-			setToken(token);
+			setErptoken(token);
 			toast.success("Login successfull!", {
 				autoClose: 3000,
 			});
@@ -104,6 +104,7 @@ export default function LoginPage() {
 	return (
 		<StyledContainer component="main" maxWidth="xs">
 			<CssBaseline />
+			<ToastContainer />
 			<div>
 				<Box sx={{ display: "flex", alignItems: "center" }}>
 					<StyledAvatar>
@@ -178,7 +179,6 @@ export default function LoginPage() {
 			<Box mt={8}>
 				<Copyright />
 			</Box>
-			<ToastContainer />
 		</StyledContainer>
 	);
 }

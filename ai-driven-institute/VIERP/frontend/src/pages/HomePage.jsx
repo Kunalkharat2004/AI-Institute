@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import InstituteDetails from "../components/InstituteDetails"
-import InstituteTrust from '../components/InstuteTrust';
+import InstituteTrust from '../components/InstituteTrust';
 import RegistrationSPOC from '../components/RegistrationSPOC';
 import InstituteInfo from '../components/InstituteInfo';
 import FinancialManagement from '../components/FinancialManagement';

@@ -36,14 +36,14 @@ export default function RegisterPage() {
 	const emailRef = useRef(null);
 	const passwordRef = useRef(null);
 
-	const setToken = useTokenStore((state) => state.setToken);
+	const setErptoken = useTokenStore((state) => state.setErptoken);
 	const navigate = useNavigate();
 
 	const mutation = useMutation({
 		mutationFn: register,
 		onSuccess: (response) => {
 			const token = response.data.access_token;
-			setToken(token);
+			setErptoken(token);
 			navigate("/");
 		},
 		onError: () => {

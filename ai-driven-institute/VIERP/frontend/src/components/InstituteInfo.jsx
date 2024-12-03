@@ -1,11 +1,48 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getInstituteInfo, submitInstituteInfo } from "../http/api";
 
 const InstituteInfo = () => {
   const [formData, setFormData] = useState({
-    aicteZone: '',
-    instituteType: '',
-    intake: [{ branch: '', ug: '', pg: '' }],
+    aicteZone: "",
+    instituteType: "",
+    intake: [{ branch: "", ug: "", pg: "" }],
+  });
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  // Fetch existing data
+  const { data: existingData, isLoading } = useQuery(
+    ["instituteInfo"],
+    getInstituteInfo,
+    {
+      onSuccess: (data) => {
+        if (data && data.data.institutionInfo) {
+          setFormData((prevData) => ({
+            ...prevData,
+            ...data.data.institutionInfo,
+          }));
+        }
+      },
+      onError: () => {
+        toast.error("Failed to fetch institute information.");
+      },
+    }
+  );
+
+  // Mutation for submitting data
+  const mutation = useMutation({
+    mutationFn: submitInstituteInfo,
+    onSuccess: () => {
+      toast.success("Institute info submitted successfully!", {
+        autoClose: 4000,
+      });
+      window.location.reload(); // Reload the page to reset the state
+    },
+    onError: () => {
+      toast.error("An error occurred while submitting the form.");
+    },
   });
 
   const handleInputChange = (e) => {
@@ -26,7 +63,7 @@ const InstituteInfo = () => {
   const addRow = () => {
     setFormData((prevData) => ({
       ...prevData,
-      intake: [...prevData.intake, { branch: '', ug: '', pg: '' }],
+      intake: [...prevData.intake, { branch: "", ug: "", pg: "" }],
     }));
   };
 
@@ -37,24 +74,34 @@ const InstituteInfo = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:5000/api/instituteInfo', {
-        instituteInfo: formData,
-      });
-      alert('Institute Info submitted successfully!');
-      console.log(response.data);
-      setFormData({
-        aicteZone: '',
-        instituteType: '',
-        intake: [{ branch: '', ug: '', pg: '' }],
-      });
-    } catch (error) {
-      console.error('Error submitting data:', error);
-      alert('An error occurred while submitting the form.');
+  const validateForm = () => {
+    for (const row of formData.intake) {
+      if (parseInt(row.ug) > 120) {
+        setErrorMessage("UG value cannot exceed 120.");
+        return false;
+      }
+      if (parseInt(row.pg) > 60) {
+        setErrorMessage("PG value cannot exceed 60.");
+        return false;
+      }
     }
+    setErrorMessage(""); // Clear error message if validation passes
+    return true;
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    mutation.mutate({ instituteInfo: formData });
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="p-6 bg-white rounded-md shadow-md">
@@ -111,7 +158,9 @@ const InstituteInfo = () => {
                     <input
                       type="text"
                       value={row.branch}
-                      onChange={(e) => handleIntakeChange(index, 'branch', e.target.value)}
+                      onChange={(e) =>
+                        handleIntakeChange(index, "branch", e.target.value)
+                      }
                       className="w-full p-1 border border-gray-300 rounded-md"
                       placeholder="Branch"
                       required
@@ -121,7 +170,9 @@ const InstituteInfo = () => {
                     <input
                       type="number"
                       value={row.ug}
-                      onChange={(e) => handleIntakeChange(index, 'ug', e.target.value)}
+                      onChange={(e) =>
+                        handleIntakeChange(index, "ug", e.target.value)
+                      }
                       className="w-full p-1 border border-gray-300 rounded-md"
                       placeholder="UG"
                       required
@@ -131,7 +182,9 @@ const InstituteInfo = () => {
                     <input
                       type="number"
                       value={row.pg}
-                      onChange={(e) => handleIntakeChange(index, 'pg', e.target.value)}
+                      onChange={(e) =>
+                        handleIntakeChange(index, "pg", e.target.value)
+                      }
                       className="w-full p-1 border border-gray-300 rounded-md"
                       placeholder="PG"
                       required
@@ -158,7 +211,13 @@ const InstituteInfo = () => {
             Add Row
           </button>
         </div>
-        <button type="submit" className="text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-md">
+        {errorMessage && (
+          <p className="text-red-600 font-bold text-center mt-2">{errorMessage}</p>
+        )}
+        <button
+          type="submit"
+          className="text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-md"
+        >
           Submit
         </button>
       </form>

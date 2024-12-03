@@ -5,12 +5,12 @@ const useTokenStore = create(
 	devtools(
 		persist(
 			(set) => ({
-				token: "",
-				setToken: (data) => set({ token: data }),
-				clearToken: () => set({ token: "" }),
+				"erpToken": "",
+				setErptoken: (data) => set({ erpToken: data }),
+				clearErptoken: () => set({ erpToken: "" }),
 			}),
 			{
-				name: "auth-token", // persist key name
+				name: "erp-auth-token", // persist key name
 			}
 		),
 		{

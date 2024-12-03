@@ -197,6 +197,176 @@ const institutionController = {
       });
     }
   },
+
+  // Get Institute Details
+  getInstituteDetails: async (req: Request, res: Response): Promise<void> => {
+    try {
+      const _req = req as AuthRequest;
+      const userID = _req.userID;
+
+      if (!userID) {
+        res.status(404).json({
+          message: "User not found",
+        });
+        return;
+      }
+
+      const institution = await Institutions.findOne({ user: userID });
+
+      if (!institution) {
+        res.status(404).json({
+          message: "Institute details not found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Institute details found",
+        institutionDetails: institution.instituteDetails,
+      });
+    } catch (err) {
+      console.error("Error occurred while fetching institute details:", err);
+      res.status(500).json({
+        message: "Error occurred while fetching institute details",
+      });
+    }
+  },
+
+  // Get Institute Trust
+  getInstituteTrust: async (req: Request, res: Response): Promise<void> => {
+    try {
+      const _req = req as AuthRequest;
+      const userID = _req.userID;
+
+      if (!userID) {
+        res.status(404).json({
+          message: "User not found",
+        });
+        return;
+      }
+
+      const institution = await Institutions.findOne({ user: userID });
+
+      if (!institution) {
+        res.status(404).json({
+          message: "Institute trust not found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Institute trust found",
+        institutionTrust: institution.instituteTrust,
+      });
+    } catch (err) {
+      console.error("Error occurred while fetching institute trust:", err);
+      res.status(500).json({
+        message: "Error occurred while fetching institute trust",
+      });
+    }
+  },
+
+  // Get Registration SPOC
+  getRegistrationSPOC: async (req: Request, res: Response): Promise<void> => {
+    try {
+      const _req = req as AuthRequest;
+      const userID = _req.userID;
+
+      if (!userID) {
+        res.status(404).json({
+          message: "User not found",
+        });
+        return;
+      }
+
+      const institution = await Institutions.findOne({ user: userID });
+
+      if (!institution) {
+        res.status(404).json({
+          message: "Registration SPOC not found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Registration SPOC found",
+        registrationSPOC: institution.registrationSPOC,
+      });
+    } catch (err) {
+      console.error("Error occurred while fetching registration SPOC:", err);
+      res.status(500).json({
+        message: "Error occurred while fetching registration SPOC",
+      });
+    }
+  },
+
+  // Get Institute Info
+  getInstituteInfo: async (req: Request, res: Response): Promise<void> => {
+    try {
+      const _req = req as AuthRequest;
+      const userID = _req.userID;
+
+      if (!userID) {
+        res.status(404).json({
+          message: "User not found",
+        });
+        return;
+      }
+
+      const institution = await Institutions.findOne({ user: userID });
+
+      if (!institution) {
+        res.status(404).json({
+          message: "Institute info not found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Institute info found",
+        institutionInfo: institution.instituteInfo,
+      });
+    } catch (err) {
+      console.error("Error occurred while fetching institute info:", err);
+      res.status(500).json({
+        message: "Error occurred while fetching institute info",
+      });
+    }
+  },
+
+  // Get Financial Management
+  getFinancialManagement: async (req: Request, res: Response): Promise<void> => {
+    try {
+      const _req = req as AuthRequest;
+      const userID = _req.userID;
+
+      if (!userID) {
+        res.status(404).json({
+          message: "User not found",
+        });
+        return;
+      }
+
+      const institution = await Institutions.findOne({ user: userID });
+
+      if (!institution) {
+        res.status(404).json({
+          message: "Financial management not found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Financial management found",
+        financialManagement: institution.financialManagement,
+      });
+    } catch (err) {
+      console.error("Error occurred while fetching financial management:", err);
+      res.status(500).json({
+        message: "Error occurred while fetching financial management",
+      });
+    }
+  },
 };
 
 export default institutionController;

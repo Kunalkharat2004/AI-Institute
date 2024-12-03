@@ -1,20 +1,62 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { instituteDetails, getInstituteDetails } from "../http/api";
 
 const InstituteDetails = () => {
-  const currentYear = '2024-2025';
-  const currentDate = new Date().toLocaleDateString();
+  const currentDate = new Date().toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "numeric",
+    year: "numeric",
+  });
 
   const [formData, setFormData] = useState({
-    name: '',
-    address: '',
-    academicYear: currentYear,
+    instituteName: "",
+    address: "",
+    academicYear: "",
     date: currentDate,
-    state: '',
-    district: '',
-    city: '',
-    pincode: '',
-    aisheCode: '',
+    state: "",
+    district: "",
+    city: "",
+    pincode: "",
+    aisheCode: "",
+  });
+
+  // Fetch existing data using useQuery
+  const { data: existingData, isLoading } = useQuery(
+    ["instituteDetails"],
+    getInstituteDetails,
+    {
+      onSuccess: (data) => {
+        console.log("Institutional data: ",data.data.institutionDetails
+        );
+        if (data && data.data.institutionDetails) {
+          setFormData((prevData) => ({
+            ...prevData,
+            ...data.data.institutionDetails,
+          }));
+        }
+      },
+      onError: () => {
+        toast.error("Failed to fetch institute details.");
+      },
+    }
+  );
+
+  const mutation = useMutation({
+    mutationFn: instituteDetails,
+    onSuccess: () => {
+      toast.success("Institute details submitted successfully!", {
+        autoClose: 4000,
+      });
+      window.location.reload(); // Reload the page to reset the state
+    },
+    onError: () => {
+      toast.error("An error occurred while submitting the form.", {
+        autoClose: 4000,
+      });
+    },
   });
 
   const handleInputChange = (e) => {
@@ -28,38 +70,29 @@ const InstituteDetails = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/institute', {
-        instituteDetails: formData,
-      });
-      alert('Institute details submitted successfully!');
-      console.log(response.data);
-      setFormData({
-        name: '',
-        address: '',
-        academicYear: currentYear,
-        date: currentDate,
-        state: '',
-        district: '',
-        city: '',
-        pincode: '',
-        aisheCode: '',
-      });
+      mutation.mutate({ instituteDetails: formData });
     } catch (error) {
-      console.error('Error submitting data:', error);
-      alert('An error occurred while submitting the form.');
+      console.error("Error submitting data:", error);
+      toast.error("An error occurred while submitting the form.");
     }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="p-6 bg-white rounded-md shadow-md">
       <h2 className="text-2xl font-bold mb-4">Institute Details Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Institute Name:</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            Institute Name:
+          </label>
           <input
             type="text"
-            name="name"
-            value={formData.name}
+            name="instituteName"
+            value={formData.instituteName}
             onChange={handleInputChange}
             className="w-full p-2 border border-gray-300 rounded-md"
             placeholder="Enter Institute Name"
@@ -79,12 +112,15 @@ const InstituteDetails = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">Academic Year:</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            Academic Year:
+          </label>
           <input
             type="text"
             name="academicYear"
             value={formData.academicYear}
-            readOnly
+            onChange={handleInputChange}
+            placeholder="YYYY-YYYY"
             className="w-full p-2 border border-gray-300 rounded-md bg-gray-100"
           />
         </div>
@@ -111,7 +147,9 @@ const InstituteDetails = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">District:</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            District:
+          </label>
           <input
             type="text"
             name="district"
@@ -147,7 +185,9 @@ const InstituteDetails = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2">AISHE Code:</label>
+          <label className="block text-gray-700 font-bold mb-2">
+            AISHE Code:
+          </label>
           <input
             type="text"
             name="aisheCode"
@@ -158,7 +198,10 @@ const InstituteDetails = () => {
             required
           />
         </div>
-        <button type="submit" className="text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-md">
+        <button
+          type="submit"
+          className="text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-md"
+        >
           Submit
         </button>
       </form>

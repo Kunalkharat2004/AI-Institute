@@ -1,12 +1,46 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getRegistrationSPOC, registrationSPOC } from "../http/api";
 
 const RegistrationSPOC = () => {
   const [formData, setFormData] = useState({
-    spocName: '',
-    spocEmail: '',
-    spocPhone: '',
-    spocPAN: '',
+    spocName: "",
+    spocEmail: "",
+    spocPhone: "",
+    spocPAN: "",
+  });
+
+  // Fetch existing SPOC details
+  const { data: existingData, isLoading } = useQuery(
+    ["registrationSPOC"],
+    getRegistrationSPOC,
+    {
+      onSuccess: (data) => {
+        if (data && data.data.registrationSPOC) {
+          setFormData((prevData) => ({
+            ...prevData,
+            ...data.data.registrationSPOC,
+          }));
+        }
+      },
+      onError: () => {
+        toast.error("Failed to fetch SPOC details.");
+      },
+    }
+  );
+
+  // Submit form mutation
+  const mutation = useMutation({
+    mutationFn: registrationSPOC,
+    onSuccess: () => {
+      toast.success("Registration & SPOC Contact details submitted successfully!");
+      window.location.reload(); // Reload the page to reset the state
+    },
+    onError: () => {
+      toast.error("An error occurred while submitting the form.");
+    },
   });
 
   const handleInputChange = (e) => {
@@ -20,22 +54,16 @@ const RegistrationSPOC = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/registrationSPOC', {
-        spocDetails: formData,
-      });
-      alert('Registration & SPOC Contact details submitted successfully!');
-      console.log(response.data);
-      setFormData({
-        spocName: '',
-        spocEmail: '',
-        spocPhone: '',
-        spocPAN: '',
-      });
+      mutation.mutate({ registrationSPOC: formData });
     } catch (error) {
-      console.error('Error submitting data:', error);
-      alert('An error occurred while submitting the form.');
+      console.error("Error submitting data:", error);
+      toast.error("An error occurred while submitting the form.");
     }
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="p-6 bg-white rounded-md shadow-md">
@@ -89,7 +117,10 @@ const RegistrationSPOC = () => {
             required
           />
         </div>
-        <button type="submit" className="text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-md">
+        <button
+          type="submit"
+          className="text-white bg-blue-600 hover:bg-blue-700 p-2 rounded-md"
+        >
           Submit
         </button>
       </form>
