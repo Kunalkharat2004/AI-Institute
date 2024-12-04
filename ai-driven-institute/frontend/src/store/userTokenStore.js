@@ -8,6 +8,9 @@ const useTokenStore = create(
 				token: "",
 				setToken: (data) => set({ token: data }),
 				clearToken: () => set({ token: "" }),
+				hasFetchedData: false,
+				setHasfetchData: (data) => set({ hasFetchedData: data }),
+				clearHasFetchedData: () => set({ hasFetchedData: false })
 			}),
 			{
 				name: "auth-token", // persist key name

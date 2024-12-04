@@ -28,6 +28,11 @@ router.post("/institute-financialManagement",
     institutionController.financialManagement
 )
 
+router.post("/institute-instituteData",
+    authentication,
+    institutionController.instituteData
+)
+
 // GET Requests
 router.get("/institute-details",
     authentication,
@@ -53,5 +58,12 @@ router.get("/institute-financialManagement",
     authentication,
     institutionController.getFinancialManagement
 )
+
+router.get("/institute-instituteData",
+    authentication,
+    institutionController.getInstituteData
+)
+
+
 
 export default router;

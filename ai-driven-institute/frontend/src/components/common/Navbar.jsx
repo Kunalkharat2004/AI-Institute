@@ -44,7 +44,7 @@ const Navbar = () => {
 
 	const isSmallScreen = useMediaQuery("(max-width:600px)"); // Adjust the breakpoint as needed
 	const isLargeScreen = useMediaQuery("(min-width:1180px)"); // Adjust the breakpoint as needed
-	const { token, setToken } = useTokenStore((state) => state);
+	const { token, setToken,setHasfetchData } = useTokenStore((state) => state);
 	React.useEffect(() => {
 		AOS.init({
 			duration: 1000,
@@ -80,6 +80,7 @@ const Navbar = () => {
 	const handleLogout = () => {
 		console.log("Logging out!..");
 		setToken("");
+		setHasfetchData(false);
 	};
 
 	const handleProfile = () => {

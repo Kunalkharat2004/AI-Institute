@@ -12,12 +12,12 @@ import Auth from "./components/layouts/Auth.jsx";
 import RegisterPage from "./pages/Auth/RegisterPage.jsx";
 import MainLayout from "./components/layouts/MainLayout.jsx";
 import Contact from "./pages/Contact/Contact.jsx";
-import Inspection from "./pages/Inspection/Inspection.jsx";
 import FeedbackPage from "./pages/Feedback/FeedbackPage.jsx";
 import ResetPasswordPage from "./pages/Auth/ResetPasswordPage.jsx";
 import AdminDashboard from "./pages/Admin/pages/AdminDashboard.jsx";
 import UserDashboardPage from "./pages/UserDashboard/UserDashboardPage.jsx";
 import FAQ from "./pages/FAQ/Faq.jsx";
+import InspectionPage from "./pages/Inspection/Inspection.jsx";
 // import "./global.css";
 
 const theme = createTheme();
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
 			{ path: "faq", element: <FAQ /> },
 			{ path: "contact", element: <Contact /> },
 			{ path: "feedback", element: <FeedbackPage /> },
-			{ path: "inspection", element: <Inspection /> },
+			{ path: "inspection", element: <InspectionPage /> },
 			{ path: "/", element: <HomePage />, index: true },
 			{
 				path: "/dashboard",

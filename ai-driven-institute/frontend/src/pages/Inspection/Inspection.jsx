@@ -1,139 +1,103 @@
-import React, { useState } from "react";
-import { FaBars, FaTimes } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import useInstituteStore from "../../store/useInstituteStore";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
+} from "@mui/material";
+import ProfilePicture from "./components/ProfilePicture";
+import InstituteDetails from "./components/InstitutionDetails";
+import InstituteTrust from "./components/InstituteTrust";
+import RegistrationSPOC from "./components/RegistrationSPOC";
+import InstituteInfoIntake from "./components/InstituteInfoIntake";
+import FinancialManagement from "./components/FinancialManagement";
+import Timeline from "./components/Timeline";
+import { fetchInstituteDetails } from "../../http/api"; // API function
+import { useQuery } from "@tanstack/react-query";
+import useTokenStore from "../../store/userTokenStore";
 
-const Inspection = () => {
-	const [isOpen, setIsOpen] = useState(false);
-	const [iframeSrc, setIframeSrc] = useState(""); // State to hold the iframe source URL
+const InspectionPage = () => {
+  const [openDialog, setOpenDialog] = useState(false); // Dialog state
+  const { instituteData, setInstituteData } = useInstituteStore(); // Zustand store
+  const {setHasfetchData,hasFetchedData} = useTokenStore()
+  // Fetch data using React Query
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["instituteDetails"], // Unique query key
+    queryFn: async () => {
+      const response = await fetchInstituteDetails();
+      if (response.data.institutionData) {
+        console.log(response.data.institutionData);
+        setInstituteData(response.data.institutionData); // Set the data in the store
 
-	const toggleSidebar = () => {
-		setIsOpen(!isOpen);
-	};
+        // Show dialog only if user hasn't already fetched data
+        if (!hasFetchedData) {
+          setOpenDialog(true); // Open dialog
+        }
+      }
+      return response; // Return the response
+    },
+  });
 
-	// Menu items data with name and URL
-	const menuItems = [
-		{ name: "Lab Assessment", url: "http://192.168.43.194:8501/" },
-		{ name: "Infrastructure Grading", url: "http://192.168.43.194:8502/" },
-		{
-			name: "Faculty Data Analysis and Grading",
-			url: "http://192.168.43.194:8503/",
-		},
-		{
-			name: "Student Satisfaction Survey",
-			url: "http://192.168.43.194:8504/",
-		},
-		{
-			name: "Institute Classroom Assessment",
-			url: "http://192.168.43.194:8505/",
-		},
-		{
-			name: "College Safety and Security",
-			url: "http://192.168.43.194:8506/",
-		},
-		{
-			name: "Institute Campus Area",
-			url: "http://192.168.43.194:8507/",
-		},
-		{
-			name: "Campus Life",
-			url: "http://192.168.43.194:8508/",
-		},
-		{
-			name: "Institute Facility",
-			url: "http://192.168.43.194:8509/",
-		},
-		{
-			name: "Educational Methodology Report",
-			url: "http://192.168.43.194:8510/",
-		},
-		{
-			name: "Enhanced College Data Analysis",
-			url: "http://192.168.43.194:8511/",
-		},
-		{
-			name: "College Examination Evaluation",
-			url: "http://192.168.43.194:8512/",
-		},
-		{
-			name: "College Research and Publication",
-			url: "http://192.168.43.194:8513/",
-		},
-		{
-			name: "College Placement Analysis",
-			url: "http://192.168.43.194:8514/",
-		},
-		{
-			name: "Satellite Image Analysis",
-			url: "http://192.168.43.194:8515/",
-		},
-	];
+  useEffect(() => {
+    // Check if the user has already fetched data
+    if (hasFetchedData) {
+      setOpenDialog(false);
+    }
+  }, []);
 
-	const handleLinkClick = (url) => {
-		setIframeSrc(url); // Update iframe source when a link is clicked
-		setIsOpen(false); // Optional: Close sidebar after clicking on a menu item
-	};
+  const handleFetchData = () => {
+    setOpenDialog(false); // Close dialog
+    setHasfetchData(true)
+  };
 
-	return (
-		<div className="flex h-screen">
-			{/* Sidebar */}
-			<div
-				className={`bg-gray-800 text-white w-72 p-4 space-y-6 transition-transform duration-300 ease-in-out transform ${
-					isOpen ? "translate-x-0" : "-translate-x-64"
-				} md:translate-x-0`}
-			>
-				{/* Close button for mobile */}
-				<div className="flex justify-between items-center mb-6">
-					<h2 className="text-xl font-bold">Menu</h2>
-					{/* Close icon to close the sidebar */}
-					<button onClick={toggleSidebar} className="md:hidden">
-						<FaTimes size={24} />
-					</button>
-				</div>
-				<nav>
-					<ul className="space-y-4">
-						{/* Map through the menuItems array */}
-						{menuItems.map((item, index) => (
-							<li key={index}>
-								<button
-									onClick={() => handleLinkClick(item.url)}
-									className="hover:text-gray-400"
-								>
-									{item.name}
-								</button>
-							</li>
-						))}
-					</ul>
-				</nav>
-			</div>
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading data</div>;
 
-			{/* Main Content */}
-			<div className="flex-1 flex flex-col">
-				{/* Mobile Menu Button */}
-				<div className="bg-gray-200 md:hidden">
-					<button
-						onClick={toggleSidebar}
-						className="text-gray-800 focus:outline-none"
-					>
-						<FaBars size={24} />
-					</button>
-				</div>
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Dialog Box */}
+      <Dialog
+        open={openDialog}
+        onClose={() => {}}
+        PaperProps={{
+          style: { borderRadius: 10, padding: "10px", backgroundColor: "#fff" },
+        }}
+        BackdropProps={{
+          style: {
+            backgroundColor: "rgba(0, 0, 0, 0.8)", // Dark overlay
+          },
+        }}
+      >
+        <DialogTitle>Fetch Data from ERP</DialogTitle>
+        <DialogContent>
+          It seems you have already filled in the institute details on the ERP
+          system. Would you like to fetch this data?
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleFetchData} color="primary" variant="contained">
+            OK
+          </Button>
+        </DialogActions>
+      </Dialog>
 
-				{/* Content */}
-				<div className="flex-1">
-					{iframeSrc ? (
-						<div style={{ height: "100vh", width: "100%" }}>
-							<iframe
-								src={iframeSrc}
-								title="Streamlit App"
-								style={{ width: "100%", height: "100%", border: "none" }}
-							/>
-						</div>
-					) : (
-						<h1 className="text-2xl font-bold">Select a menu option</h1>
-					)}
-				</div>
-			</div>
-		</div>
-	);
+      {/* Main Content */}
+      <div className="min-h-screen bg-gray-100 p-4">
+        <Timeline />
+        <div className="p-8 space-y-8">
+          <div className="grid md:grid-cols-2 gap-8">
+            <ProfilePicture />
+            <InstituteDetails />
+          </div>
+          <InstituteTrust />
+          <RegistrationSPOC />
+          <InstituteInfoIntake />
+          <FinancialManagement />
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default Inspection;
+export default InspectionPage;

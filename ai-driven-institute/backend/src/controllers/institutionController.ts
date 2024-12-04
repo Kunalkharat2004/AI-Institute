@@ -198,6 +198,53 @@ const institutionController = {
     }
   },
 
+  // Update or Create Institute Data
+  instituteData: async (req: Request, res: Response): Promise<void> => {
+    try {
+      const _req = req as AuthRequest;
+      const userID = _req.userID;
+      const { instituteDetails, instituteTrust, registrationSPOC, instituteInfo, financialManagement } = req.body;
+
+      if (!userID) {
+        res.status(404).json({
+          message: "User not found",
+        });
+        return;
+      }
+
+      let institution = await Institutions.findOne({ user: userID });
+
+      if (institution) {
+        institution.instituteDetails = instituteDetails;
+        institution.instituteTrust = instituteTrust;
+        institution.registrationSPOC = registrationSPOC;
+        institution.instituteInfo = instituteInfo;
+        institution.financialManagement = financialManagement;
+      } else {
+        institution = new Institutions({
+          user: userID,
+          instituteDetails,
+          instituteTrust,
+          registrationSPOC,
+          instituteInfo,
+          financialManagement
+        });
+      }
+
+      const savedInstitution = await institution.save();
+
+      res.status(200).json({
+        message: "Institute Data updated successfully",
+        institution: savedInstitution,
+      });
+    } catch (err) {
+      console.error("Error occurred while updating Institute Data:", err);
+      res.status(500).json({
+        message: "Error occurred while updating Institute Data",
+      });
+    }
+  },
+
   // Get Institute Details
   getInstituteDetails: async (req: Request, res: Response): Promise<void> => {
     try {
@@ -364,6 +411,42 @@ const institutionController = {
       console.error("Error occurred while fetching financial management:", err);
       res.status(500).json({
         message: "Error occurred while fetching financial management",
+      });
+    }
+  },
+  // Get Institute Data
+  getInstituteData: async (req: Request, res: Response): Promise<void> => {
+    try {
+      const _req = req as AuthRequest;
+      const userID = _req.userID;
+
+      console.log("User id is", userID);
+      
+
+      if (!userID) {
+        res.status(404).json({
+          message: "User not found",
+        });
+        return;
+      }
+
+      const institution = await Institutions.findOne({ user: userID });
+
+      if (!institution) {
+        res.status(404).json({
+          message: "Institute Data not found",
+        });
+        return;
+      }
+
+      res.status(200).json({
+        message: "Institute Data found",
+        institutionData: institution
+      });
+    } catch (err) {
+      console.error("Error occurred while fetching Institute Data :", err);
+      res.status(500).json({
+        message: "Error occurred while fetching Institute Data ",
       });
     }
   },
