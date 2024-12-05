@@ -2,6 +2,7 @@ import useTokenStore from "../../store/userTokenStore";
 import Footer from "../common/Footer";
 import Navbar from "../common/Navbar";
 import { Navigate, Outlet } from "react-router-dom";
+import ScrollToTop from "../common/ScrollToTop";
 
 const MainLayout = () => {
 	const { token } = useTokenStore((state) => state);
@@ -14,6 +15,7 @@ const MainLayout = () => {
 		<>
 			{" "}
 			<div className="flex flex-col min-h-screen">
+				<ScrollToTop/>
 				<Navbar />
 				<main className="flex-grow">
 					<Outlet />

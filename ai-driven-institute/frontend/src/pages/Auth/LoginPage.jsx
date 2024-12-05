@@ -15,7 +15,7 @@ import { useRef, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../../http/api";
+import { fetchPaymentStatus, login } from "../../http/api";
 import { useNavigate } from "react-router-dom";
 import useTokenStore from "../../store/userTokenStore";
 
@@ -59,14 +59,23 @@ export default function LoginPage() {
 	const [rememberMe, setRememberMe] = useState(false);
 
 	const setToken = useTokenStore((state) => state.setToken);
+	const setPaymentStatus = useTokenStore((state) => state.setPaymentStatus);
 
 	const navigate = useNavigate();
 
 	const mutation = useMutation({
 		mutationFn: login,
-		onSuccess: (response) => {
+		onSuccess: async(response) => {
 			const token = response.data.access_token;
 			setToken(token);
+
+			try{
+				const {data} = await fetchPaymentStatus();
+				console.log(data.paymentStatus);
+				setPaymentStatus(data.paymentStatus);
+			}catch(err){
+				console.log(err);
+			}
 			toast.success("Login successfull!", {
 				autoClose: 3000,
 			});

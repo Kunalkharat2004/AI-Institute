@@ -76,12 +76,12 @@ const InstituteInfo = () => {
 
   const validateForm = () => {
     for (const row of formData.intake) {
-      if (parseInt(row.ug) > 120) {
-        setErrorMessage("UG value cannot exceed 120.");
+      if (parseInt(row.ug) > 480) {
+        setErrorMessage("UG value cannot exceed 480.");
         return false;
       }
-      if (parseInt(row.pg) > 60) {
-        setErrorMessage("PG value cannot exceed 60.");
+      if (parseInt(row.pg) > 120) {
+        setErrorMessage("PG value cannot exceed 120.");
         return false;
       }
     }

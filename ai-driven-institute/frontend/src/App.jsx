@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {
-	ThemeProvider as MuiThemeProvider,
-	createTheme,
+  ThemeProvider as MuiThemeProvider,
+  createTheme,
 } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -18,54 +18,59 @@ import AdminDashboard from "./pages/Admin/pages/AdminDashboard.jsx";
 import UserDashboardPage from "./pages/UserDashboard/UserDashboardPage.jsx";
 import FAQ from "./pages/FAQ/Faq.jsx";
 import InspectionPage from "./pages/Inspection/Inspection.jsx";
-// import "./global.css";
+import PaymentPage from "./pages/Payment/PaymentForm.jsx";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import config from "./config/config.js";
 
 const theme = createTheme();
 const queryClient = new QueryClient();
+const stripePromise = loadStripe(config.stripePublicKey);
 
 const router = createBrowserRouter([
-	{
-		path: "/",
-		element: <MainLayout />,
-		children: [
-			{ path: "home", element: <HomePage /> },
-			{ path: "faq", element: <FAQ /> },
-			{ path: "contact", element: <Contact /> },
-			{ path: "feedback", element: <FeedbackPage /> },
-			{ path: "inspection", element: <InspectionPage /> },
-			{ path: "/", element: <HomePage />, index: true },
-			{
-				path: "/dashboard",
-				element: <UserDashboardPage/>
-			}
-		],
-	},
-	{
-		path: "/auth",
-		element: <Auth />,
-		children: [
-			{ path: "login", element: <LoginPage /> },
-			{ path: "reset-password", element: <ResetPasswordPage /> },
-			{ path: "register", element: <RegisterPage /> },
-		],
-	},
-	{
-		path:"/admin/dashboard",
-		element: <AdminDashboard/>
-	},
-	
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      { path: "home", element: <HomePage /> },
+      { path: "faq", element: <FAQ /> },
+      { path: "contact", element: <Contact /> },
+      { path: "feedback", element: <FeedbackPage /> },
+      { path: "payment", element: <PaymentPage /> },
+      { path: "inspection", element: <InspectionPage /> },
+      { path: "/", element: <HomePage />, index: true },
+      {
+        path: "/dashboard",
+        element: <UserDashboardPage />,
+      },
+    ],
+  },
+  {
+    path: "/auth",
+    element: <Auth />,
+    children: [
+      { path: "login", element: <LoginPage /> },
+      { path: "reset-password", element: <ResetPasswordPage /> },
+      { path: "register", element: <RegisterPage /> },
+    ],
+  },
+  {
+    path: "/admin/dashboard",
+    element: <AdminDashboard />,
+  },
 ]);
 
 const App = () => {
-	return (
-		<QueryClientProvider client={queryClient}>
-			<MuiThemeProvider theme={theme}>
-				<CssBaseline />
-
-				<RouterProvider router={router} />
-			</MuiThemeProvider>
-		</QueryClientProvider>
-	);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline />
+        <Elements stripe={stripePromise}>
+          <RouterProvider router={router} />
+        </Elements>
+      </MuiThemeProvider>
+    </QueryClientProvider>
+  );
 };
 
 export default App;

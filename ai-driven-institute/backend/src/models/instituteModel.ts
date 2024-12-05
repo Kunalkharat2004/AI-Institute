@@ -46,6 +46,8 @@ const institutionsSchema = new mongoose.Schema<Iinstitute>(
         bankName: { type: String, default: null },
         ifscCode: { type: String, default: null },
       },
+      receiptUrl: { type: String , default: null },
+      paymentStatus: { type: String, enum:["pending","completed"],default: "pending" }, // Defaults to pending
     },
     { timestamps: true }
   );

@@ -46,4 +46,8 @@ export interface Iinstitute extends Document{
         bankName: string;
         ifscCode: string;
     };
+
+    paymentStatus: string;
+
+    receiptUrl: string;
 }

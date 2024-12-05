@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import useTokenStore from "../../store/userTokenStore";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import AicteLgLogo from "../../assets/image/aicte-logo.png";
 import AicteSmLogo from "../../assets/image/aicte-sm-logo.png";
 import DigitalIndiaLogo from "../../assets/image/digital-india-logo.png";
@@ -44,7 +44,7 @@ const Navbar = () => {
 
 	const isSmallScreen = useMediaQuery("(max-width:600px)"); // Adjust the breakpoint as needed
 	const isLargeScreen = useMediaQuery("(min-width:1180px)"); // Adjust the breakpoint as needed
-	const { token, setToken,setHasfetchData } = useTokenStore((state) => state);
+	const { token, setToken,setHasfetchData,setPaymentStatus } = useTokenStore((state) => state);
 	React.useEffect(() => {
 		AOS.init({
 			duration: 1000,
@@ -81,6 +81,7 @@ const Navbar = () => {
 		console.log("Logging out!..");
 		setToken("");
 		setHasfetchData(false);
+		setPaymentStatus(false);
 	};
 
 	const handleProfile = () => {

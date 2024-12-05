@@ -17,11 +17,16 @@ import Timeline from "./components/Timeline";
 import { fetchInstituteDetails } from "../../http/api"; // API function
 import { useQuery } from "@tanstack/react-query";
 import useTokenStore from "../../store/userTokenStore";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const InspectionPage = () => {
+
+  const {setHasfetchData,hasFetchedData,paymentStatus} = useTokenStore()
+  const navigate = useNavigate();
+
   const [openDialog, setOpenDialog] = useState(false); // Dialog state
   const { instituteData, setInstituteData } = useInstituteStore(); // Zustand store
-  const {setHasfetchData,hasFetchedData} = useTokenStore()
   // Fetch data using React Query
   const { data, isLoading, error } = useQuery({
     queryKey: ["instituteDetails"], // Unique query key
@@ -39,6 +44,15 @@ const InspectionPage = () => {
       return response; // Return the response
     },
   });
+
+  useEffect(()=>{
+    if(!paymentStatus){
+      toast.error("Please complete payment to proceed.",{
+        autoClose: 4000,
+      });
+      navigate("/payment")
+    }
+  },[paymentStatus,navigate])
 
   useEffect(() => {
     // Check if the user has already fetched data
