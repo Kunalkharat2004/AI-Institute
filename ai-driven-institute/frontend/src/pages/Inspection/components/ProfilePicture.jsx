@@ -6,11 +6,11 @@ import {jwtDecode} from "jwt-decode";
 const ProfilePicture = () => {
   const { token } = useTokenStore((state) => state);
   const user = token ? jwtDecode(token) : { email: "User" };
-
+  
   return (
-    <div className="bg-white p-6 border shadow-lg rounded-lg flex flex-col items-center space-y-4">
+    <div className="bg-white p-6 border shadow-lg rounded-lg flex flex-col items-center justify-center space-y-4">
       {/* Profile Picture */}
-      <div className="h-28 w-28 md:h-56 md:w-56 rounded-full flex items-center justify-center shadow-md">
+      <div className="h-28 w-28 md:h-36 md:w-36 rounded-full flex items-center justify-center shadow-md">
         <Avatar
           alt="User"
           sx={{

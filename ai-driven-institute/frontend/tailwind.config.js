@@ -3,12 +3,15 @@ export default {
 	content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
 	theme: {
 		extend: {
-			// colors: {
-			// 	"light-bg": "#ffffff",
-			// 	"dark-bg": "#000000",
-			// 	"light-text": "#000000",
-			// 	"dark-text": "#ffffff",
-			// },
+			animation: {
+				float: 'float 3s ease-in-out infinite',
+			  },
+			  keyframes: {
+				float: {
+				  '0%, 100%': { transform: 'translateY(0)' },
+				  '50%': { transform: 'translateY(-10px)' },
+				},
+			  },
 		},
 	},
 	plugins: [],

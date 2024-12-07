@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 import useInstituteStore from "../../../store/useInstituteStore";
 
 const InstituteDetails = () => {
-  const { instituteData,updateInstituteDetails } = useInstituteStore(); // Zustand store to get data
+  const { instituteData, updateInstituteDetails } = useInstituteStore(); // Zustand store to get data
   const [formData, setFormData] = useState({
     instituteName: "",
     address: "",
+    date:"",
     academicYear: "",
     state: "",
     district: "",
     city: "",
     pincode: "",
     aisheCode: "",
+    collegeEstablishmentYear: "",
   });
 
-  const currentDate = new Date().toISOString().split("T")[0];
-
+  const date = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     if (instituteData?.instituteDetails) {
@@ -37,6 +38,18 @@ const InstituteDetails = () => {
       <h2 className="text-lg font-bold mb-4">Institute Details</h2>
       <div className="grid grid-cols-2 gap-4">
         <div>
+          <label htmlFor="aisheCode" className="block font-medium mb-1">
+            AISHE Code
+          </label>
+          <input
+            id="aisheCode"
+            type="text"
+            value={formData.aisheCode}
+            onChange={handleChange}
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
+          />
+        </div>
+        <div>
           <label htmlFor="instituteName" className="block font-medium mb-1">
             Institute Name
           </label>
@@ -45,7 +58,7 @@ const InstituteDetails = () => {
             type="text"
             value={formData.instituteName}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
         <div>
@@ -57,7 +70,7 @@ const InstituteDetails = () => {
             type="text"
             value={formData.address}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
         <div>
@@ -70,7 +83,7 @@ const InstituteDetails = () => {
             value={formData.academicYear}
             onChange={handleChange}
             placeholder="YYYY-YYYY"
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
         <div>
@@ -80,7 +93,7 @@ const InstituteDetails = () => {
           <input
             id="date"
             type="date"
-            value={currentDate}
+            value={date}
             disabled
             className="border rounded p-2 w-full bg-gray-100"
           />
@@ -94,7 +107,7 @@ const InstituteDetails = () => {
             type="text"
             value={formData.state}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
         <div>
@@ -106,7 +119,7 @@ const InstituteDetails = () => {
             type="text"
             value={formData.district}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
         <div>
@@ -118,7 +131,7 @@ const InstituteDetails = () => {
             type="text"
             value={formData.city}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
         <div>
@@ -130,19 +143,19 @@ const InstituteDetails = () => {
             type="text"
             value={formData.pincode}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
         <div>
-          <label htmlFor="aisheCode" className="block font-medium mb-1">
-            AISHE Code
+          <label htmlFor="collegeEstablishmentYear" className="block font-medium mb-1">
+            College Establishment Year
           </label>
           <input
-            id="aisheCode"
+            id="collegeEstablishmentYear"
             type="text"
-            value={formData.aisheCode}
+            value={formData.collegeEstablishmentYear}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
       </div>

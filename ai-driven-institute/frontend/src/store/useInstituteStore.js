@@ -15,6 +15,14 @@ const useInstituteStore = create((set) => ({
       },
     })),
 
+  updateUniversity: (data) =>
+    set((state) => ({
+      instituteData: {
+        ...state.instituteData,
+        university: data,
+      },
+    })),
+
   updateInstituteTrust: (trust) =>
     set((state) => ({
       instituteData: {
@@ -32,6 +40,21 @@ const useInstituteStore = create((set) => ({
               spocEmail: spoc.spocEmail,
               spocPhone: spoc.spocPhone,
               spocPAN: spoc.spocPan,
+              designation: spoc.designation
+            },
+          },
+        })),
+        updateprincipalData: (principal) =>
+        set((state) => ({
+          instituteData: {
+            ...state.instituteData,
+            principalDetails: {
+              principalName: principal.principalName,
+              principalEmail: principal.principalEmail,
+              principalPhone: principal.principalPhone,
+              principalPAN: principal.principalPan,
+              designation: principal.designation,
+              isDoctorDegree: principal.isDoctorDegree
             },
           },
         })),

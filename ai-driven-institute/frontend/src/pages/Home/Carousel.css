@@ -1,0 +1,34 @@
+@keyframes slideInLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .slide-in {
+    animation: slideInLeft 1s ease-in-out;
+  }
+  
+  .image-caption {
+    /* font-size: 3.5rem; Adjust size to your preference */
+    font-weight: 700; /* Adjust font weight to your preference */
+    letter-spacing: 0;
+    text-align: left;
+    margin-left: 3rem;
+    color: #fff;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+  }
+
+  .image-subheading{
+    
+    font-weight: 400;
+    text-align: left;
+    margin-left: 3rem;
+    color: #fff;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+  }
+  

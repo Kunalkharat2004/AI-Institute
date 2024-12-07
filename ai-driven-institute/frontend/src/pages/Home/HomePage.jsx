@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import Carousel from "./Carousel";
 import QuoteSlider from "./QuotesSlider";
 import InspectionContainer from "./InspectionContainer";
+import AicteCard from "./AicteCard/AicteCard";
+import ContactSection from "./ContactSection";
 
 const HomePage = () => {
 	const navigate = useNavigate();
@@ -22,7 +24,7 @@ const HomePage = () => {
 			<div className="w-full mb-12">
 				<div className="w-full mx-auto">
 					<div
-						className="w-full flex justify-center md:justify-end"
+						className="w-full"
 						data-aos="fade-left"
 					>
 						<Carousel />
@@ -30,10 +32,12 @@ const HomePage = () => {
 				</div>
 
 				{/* Additional content below */}
+				<AicteCard/>
 				<FeatureCard />
-				<InfoCard />
 				<InspectionContainer />
+				<InfoCard />
 				<QuoteSlider/>
+				<ContactSection/>
 				<FAQ />
 			</div>
 		</>

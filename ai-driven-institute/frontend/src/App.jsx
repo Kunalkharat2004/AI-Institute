@@ -22,6 +22,7 @@ import PaymentPage from "./pages/Payment/PaymentForm.jsx";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import config from "./config/config.js";
+import "./global.css";  
 
 const theme = createTheme();
 const queryClient = new QueryClient();

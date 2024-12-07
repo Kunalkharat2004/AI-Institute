@@ -4,22 +4,35 @@ export interface Iinstitute extends Document{
     applicationNo: string;
 
     user: Types.ObjectId;
-
+    date: string;
     instituteDetails: {
         instituteName: string;
         address: string;
         academicYear: string;
-        date: string;
         state: string;
         district: string;
         city: string;
         pincode: string;
         aisheCode: string;
         applicationNo: string;
+        collegeEstablishmentYear: number;
     };
-
+    university: {
+        universityName: string;
+        universityType: string;
+        universityCode: string;
+        universityAddress: string;
+        establishmentYear: number;
+        universityContact: {
+            email: string;
+            phone: string;
+        };
+        universityWebsite: string;
+    };
     instituteTrust: {
         trustName: string;
+        trustRegistrationNo: string;
+        trustAddress: string;
         establishmentYear: number;
     };
 
@@ -28,6 +41,16 @@ export interface Iinstitute extends Document{
         spocEmail: string;
         spocPhone: string;
         spocPAN: string;
+        designation: string;
+    };
+
+    principalDetails: {
+        principalName: string;
+        principalEmail: string;
+        principalPhone: string;
+        principalPAN: string;
+        isDoctorDegree: boolean;
+        designation: string;
     };
 
     instituteInfo: {
@@ -43,6 +66,7 @@ export interface Iinstitute extends Document{
     };
     
     financialManagement: {
+        accountNo: string;
         bankName: string;
         ifscCode: string;
     };

@@ -122,7 +122,7 @@ const Navbar = () => {
 		<AppBar
 			position="sticky"
 			sx={{
-				backgroundColor: theme === "light" ? "white" : "black",
+				backgroundColor: theme === "light" ? "#1C1C9B" : "black",
 				boxShadow: "none",
 				borderBottom: "1px solid #E0E0E0"
 			}}
@@ -273,12 +273,12 @@ const Navbar = () => {
 								key={page.name}
 								onClick={() => handleMenuClick(page)}
 								sx={{
-									color: theme === "light" ? "black" : "white",
+									color: theme === "light" ? "white" : "black",
 									mx: 1,
 									position: "relative",
 									transition: "all 0.3s ease-in-out",
 									"&:hover": {
-										color: theme === "light" ? "black" : "white",
+										color: theme === "light" ? "white" : "black",
 										"&:after": {
 											content: '""',
 											position: "absolute",
@@ -286,7 +286,7 @@ const Navbar = () => {
 											bottom: -4,
 											width: "100%",
 											height: "2px",
-											backgroundColor: "black",
+											backgroundColor: "white",
 											transform: "scaleX(1)",
 											transformOrigin: "bottom left",
 										},
@@ -298,7 +298,7 @@ const Navbar = () => {
 										bottom: -4,
 										width: "100%",
 										height: "2px",
-										backgroundColor: "black",
+										backgroundColor: "white",
 										transform: "scaleX(0)",
 										transformOrigin: "bottom right",
 										transition: "transform 0.3s ease-in-out",

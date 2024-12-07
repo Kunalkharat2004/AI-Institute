@@ -9,8 +9,14 @@ import {
 	Snackbar,
 	Alert,
 } from "@mui/material";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import useTokenStore from "../../store/userTokenStore";
 
 const FeedbackPage = () => {
+	
+	const { token } = useTokenStore();
 	const [feedback, setFeedback] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [success, setSuccess] = useState(false);
@@ -18,20 +24,52 @@ const FeedbackPage = () => {
 
 	const handleFeedbackChange = (e) => setFeedback(e.target.value);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault();
 		setLoading(true);
 
 		// Simulate feedback submit for UI purposes only
-		setTimeout(() => {
-			setLoading(false);
-			setSuccess(true);
-			setFeedback("");
-		}, 2000);
+		try{
+			e.preventDefault();
+			const formData = new FormData(e.target);
+			const data = {
+			  feedbackDetails: {
+				feedback: formData.get("feedback"),
+			  },
+			};
+	  
+			console.log("Form Data: ", data);
+	  
+			const response = await axios.post(
+			  "http://localhost:3600/api/feedback",
+			  data,
+			  {
+				headers: {
+				  "Content-Type": "application/json",
+				  Authorization: `Bearer ${token}`,
+				},
+			  }
+			);
+	  
+			console.log("Response Status: ", response.status);
+	  
+			if (response.status === 200) {
+			  toast.success("Feedback submitted successfully", {
+				autoClose: 4000,
+			  });
+			}
+	  
+			// Reset the form
+			e.target.reset();
+		}catch(err){
+			console.error("Error: ", err);
+			setError("Failed to submit feedback. Please try again.");
+		}
 	};
 
 	return (
 		<Container maxWidth="sm" sx={{ mt: 18 }}>
+			<ToastContainer/>
 			<Typography variant="h4" component="h1" gutterBottom>
 				Feedback
 			</Typography>
@@ -47,6 +85,7 @@ const FeedbackPage = () => {
 					variant="outlined"
 					fullWidth
 					value={feedback}
+					name="feedback"
 					onChange={handleFeedbackChange}
 					required
 				/>
@@ -54,32 +93,11 @@ const FeedbackPage = () => {
 					type="submit"
 					variant="contained"
 					color="primary"
-					disabled={loading}
 					sx={{ alignSelf: "flex-start" }}
 				>
-					{loading ? <CircularProgress size={24} /> : "Submit Feedback"}
+					Submit Feedback
 				</Button>
 			</Box>
-
-			<Snackbar
-				open={success}
-				autoHideDuration={6000}
-				onClose={() => setSuccess(false)}
-			>
-				<Alert onClose={() => setSuccess(false)} severity="success">
-					Feedback submitted successfully!
-				</Alert>
-			</Snackbar>
-
-			<Snackbar
-				open={!!error}
-				autoHideDuration={6000}
-				onClose={() => setError("")}
-			>
-				<Alert onClose={() => setError("")} severity="error">
-					{error}
-				</Alert>
-			</Snackbar>
 		</Container>
 	);
 };

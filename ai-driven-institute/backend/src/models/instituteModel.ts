@@ -4,6 +4,7 @@ import { Iinstitute } from "../utils/instituteType";
 const institutionsSchema = new mongoose.Schema<Iinstitute>(
     {
       applicationNo: { type: String, default: null }, // Defaults to null but will be generated later
+      date: { type: String, default: null },
       user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -14,22 +15,39 @@ const institutionsSchema = new mongoose.Schema<Iinstitute>(
         instituteName: { type: String, default: null },
         address: { type: String, default: null },
         academicYear: { type: String, default: null },
-        date: { type: String, default: null },
         state: { type: String, default: null },
         district: { type: String, default: null },
         city: { type: String, default: null },
         pincode: { type: String, default: null },
         aisheCode: { type: String, default: null },
+        collegeEstablishmentYear: { type: Number, default: null },
+      },
+      university: {
+        universityName: { type: String, default: null },
+        universityCode: { type: String, default: null },
       },
       instituteTrust: {
         trustName: { type: String, default: null },
         establishmentYear: { type: Number, default: null },
+        trustRegistrationNo: { type: String, default: null },
+        trustAddress: { type: String, default: null },
       },
       registrationSPOC: {
         spocName: { type: String, default: null },
         spocEmail: { type: String, default: null },
         spocPhone: { type: String, default: null },
         spocPAN: { type: String, default: null },
+        designation: { type: String, default: null },
+      },
+
+      principalDetails: {
+        principalName: { type: String, default: null },
+        principalEmail: { type: String, default: null },
+        principalPhone: { type: String, default: null },
+        principalPAN: { type: String, default: null },
+        principalTypeOfAppointment: { type: String,enum:["regular","temporary","permanent","partTime"] ,default: "regular" },
+        designation: { type: String, default: null },
+        isDoctorDegree: { type: Boolean, default: false },
       },
       instituteInfo: {
         aicteZone: { type: String, default: null },
@@ -43,6 +61,7 @@ const institutionsSchema = new mongoose.Schema<Iinstitute>(
         ],
       },
       financialManagement: {
+        accountNo: { type: String, default: null },
         bankName: { type: String, default: null },
         ifscCode: { type: String, default: null },
       },
@@ -63,4 +82,3 @@ const institutionsSchema = new mongoose.Schema<Iinstitute>(
   
   const Institutions = mongoose.model("Institutions", institutionsSchema);
   export default Institutions;
-  

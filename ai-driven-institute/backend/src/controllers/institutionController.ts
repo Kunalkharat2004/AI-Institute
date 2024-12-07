@@ -80,6 +80,43 @@ const institutionController = {
       });
     }
   },
+  university: async (req: Request, res: Response): Promise<void> => {
+    try {
+      const _req = req as AuthRequest;
+      const userID = _req.userID;
+      const { university } = req.body;
+
+      if (!userID) {
+        res.status(404).json({
+          message: "User not found",
+        });
+        return;
+      }
+
+      let institution = await Institutions.findOne({ user: userID });
+
+      if (institution) {
+        institution.university = university;
+      } else {
+        institution = new Institutions({
+          user: userID,
+          university,
+        });
+      }
+
+      const savedInstitution = await institution.save();
+
+      res.status(200).json({
+        message: "University updated successfully",
+        institution: savedInstitution,
+      });
+    } catch (err) {
+      console.error("Error occurred while updating university:", err);
+      res.status(500).json({
+        message: "Error occurred while updating university",
+      });
+    }
+  },
 
   // Update or Create Registration SPOC
   registrationSPOC: async (req: Request, res: Response): Promise<void> => {
@@ -203,7 +240,7 @@ const institutionController = {
     try {
       const _req = req as AuthRequest;
       const userID = _req.userID;
-      const { instituteDetails, instituteTrust, registrationSPOC, instituteInfo, financialManagement } = req.body;
+      const { instituteDetails, instituteTrust, registrationSPOC, instituteInfo, financialManagement,university,principalDetails } = req.body;
 
       if (!userID) {
         res.status(404).json({
@@ -215,9 +252,12 @@ const institutionController = {
       let institution = await Institutions.findOne({ user: userID });
 
       if (institution) {
+        institution.date = new Date().toISOString().split("T")[0];
         institution.instituteDetails = instituteDetails;
         institution.instituteTrust = instituteTrust;
+        institution.university = university;
         institution.registrationSPOC = registrationSPOC;
+        institution.principalDetails = principalDetails;
         institution.instituteInfo = instituteInfo;
         institution.financialManagement = financialManagement;
       } else {
@@ -225,7 +265,9 @@ const institutionController = {
           user: userID,
           instituteDetails,
           instituteTrust,
+          university,
           registrationSPOC,
+          principalDetails,
           instituteInfo,
           financialManagement
         });

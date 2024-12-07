@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import useInstituteStore from "../../../store/useInstituteStore";
 
 const InstituteTrust = () => {
-  const { instituteData,updateInstituteTrust  } = useInstituteStore(); // Zustand store to get data
+  const { instituteData, updateInstituteTrust } = useInstituteStore(); // Zustand store to get data
   const [trustData, setTrustData] = useState({
     trustName: "",
     establishmentYear: "",
+    trustRegistrationNo:"",
+    trustAddress:""
   });
 
   useEffect(() => {
@@ -13,6 +15,8 @@ const InstituteTrust = () => {
       setTrustData({
         trustName: instituteData.instituteTrust.trustName || "", // Ensure a default value
         establishmentYear: instituteData.instituteTrust.establishmentYear || "", // Ensure a default value
+        trustAddress: instituteData.instituteTrust.trustAddress || "", // Ensure a default value
+        trustRegistrationNo: instituteData.instituteTrust.trustRegistrationNo || "", // Ensure a default value
       });
     }
   }, [instituteData]);
@@ -28,6 +32,30 @@ const InstituteTrust = () => {
       <h2 className="text-lg font-bold mb-4">Institute Trust</h2>
       <div className="grid grid-cols-2 gap-4">
         <div>
+          <label htmlFor="trustRegistrationNo" className="block font-medium mb-1">
+            Trust ID
+          </label>
+          <input
+            id="trustRegistrationNo"
+            type="text"
+            value={trustData.trustRegistrationNo}
+            onChange={handleChange}
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
+          />
+        </div>
+        <div>
+          <label htmlFor="trustAddress" className="block font-medium mb-1">
+            Trust Address
+          </label>
+          <input
+            id="trustAddress"
+            type="text"
+            value={trustData.trustAddress}
+            onChange={handleChange}
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
+          />
+        </div>
+        <div>
           <label htmlFor="trustName" className="block font-medium mb-1">
             Trust Name
           </label>
@@ -36,7 +64,7 @@ const InstituteTrust = () => {
             type="text"
             value={trustData.trustName}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
         <div>
@@ -48,7 +76,7 @@ const InstituteTrust = () => {
             type="number"
             value={trustData.establishmentYear}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
       </div>

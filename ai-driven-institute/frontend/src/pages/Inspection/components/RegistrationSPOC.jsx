@@ -8,6 +8,7 @@ const RegistrationSPOC = () => {
     spocEmail: "",
     spocPhone: "",
     spocPan: "",
+    designation: "",
   });
 
   useEffect(() => {
@@ -17,6 +18,7 @@ const RegistrationSPOC = () => {
         spocEmail: instituteData.registrationSPOC.spocEmail || "", // Default value
         spocPhone: instituteData.registrationSPOC.spocPhone || "", // Default value
         spocPan: instituteData.registrationSPOC.spocPAN || "", // Default value
+        designation: instituteData.registrationSPOC.designation || "", // Default value
       });
     }
   }, [instituteData]);
@@ -47,7 +49,7 @@ const RegistrationSPOC = () => {
             type="text"
             value={spocData.spocName}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
         <div>
@@ -59,7 +61,7 @@ const RegistrationSPOC = () => {
             type="email"
             value={spocData.spocEmail}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
         <div>
@@ -71,7 +73,7 @@ const RegistrationSPOC = () => {
             type="tel"
             value={spocData.spocPhone}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
         <div>
@@ -83,7 +85,31 @@ const RegistrationSPOC = () => {
             type="text"
             value={spocData.spocPan}
             onChange={handleChange}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
+          />
+        </div>
+        <div>
+          <label htmlFor="spocType" className="block font-medium mb-1">
+            Appointment Type
+          </label>
+          <input
+            id="spocType"
+            type="text"
+            value={"Permanent"}
+            disabled
+            className="border rounded p-2 w-full bg-gray-100"
+          />
+        </div>
+        <div>
+          <label htmlFor="designation" className="block font-medium mb-1">
+            Designation
+          </label>
+          <input
+            id="designation"
+            type="text"
+            value={spocData.designation}
+            onChange={handleChange}
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           />
         </div>
       </div>

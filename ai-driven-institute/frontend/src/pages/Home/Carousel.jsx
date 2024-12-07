@@ -1,27 +1,59 @@
+import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
-import img1 from "../../assets/image/Hero_06.jpg"
-import img2 from "../../assets/image/Hero_01.jpg"
-import img3 from "../../assets/image/Hero_02.jpg"
-import img4 from "../../assets/image/Hero_03.jpg"
-import img5 from "../../assets/image/Hero_04.jpg"
+import img1 from "../../assets/image/aicte_img8.jpg";
+import img2 from "../../assets/image/Hero_01.jpg";
+import img3 from "../../assets/image/Hero_02.jpg";
+import img4 from "../../assets/image/Hero_03.jpeg";
+import img5 from "../../assets/image/Hero_04.jpeg";
+import img6 from "../../assets/image/Hero_05.jpg";
+
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "./Carousel.css"; // Import your CSS file here
 
-// Images
 const images = [
-  { src: img1, caption: "Hallstatt - Austria" },
-  { src: img2, caption: "Hallstatt - Austria" },
-  { src: img3, caption: "Hvitserkur - Iceland" },
-  { src: img4, caption: "Jacksonville - USA" },
-  { src: img5, caption: "Moraine Lake - Canada" },
+  {
+    src: img1,
+    heading:"Welcome to AICTE!",
+    subheading: "Empowering technical education through quality assurance and innovation.",
+  },
+  {
+    src: img2,
+    heading: "Transforming Institutional Excellence through AI",
+    subheading: "Revolutionizing institutional assessment with cutting-edge artificial intelligence.",
+  },
+  {
+    src: img3,
+    heading: "Data-Driven Insights, Precision Unleashed",
+    subheading: "Uncover hidden insights through advanced data processing and intelligent algorithms. Turn complex information into actionable intelligence.",
+  },
+  {
+    src: img4,
+    heading: "Intelligent Document Processing",
+    subheading: "Comprehensive document evaluation using natural language processing. Ensuring accuracy, compliance, and depth of analysis.",
+  },
+  {
+    src: img5,
+    heading: "Comprehensive Facility Scanning",
+    subheading: "Comprehensive facility monitoring through state-of-the-art image recognition. No detail goes unnoticed, no standard unmet.",
+  },
+  {
+    src: img6,
+    heading: "Real-Time Performance Tracking",
+    subheading: "Instantaneous performance tracking across multiple institutional parameters. Empowering decision-makers with real-time insights.",
+  },
 ];
 
 const Carousel = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
-    <div style={{ width: "100%", height: "60vh",padding:"1.2rem 5rem" }}>
+    <div
+      className="overflow-hidden relative h-[23vh] md:h-[55vh] lg:h-[60vh]"
+    >
       <Swiper
         modules={[Autoplay, Navigation, Pagination]}
         spaceBetween={30}
@@ -32,6 +64,7 @@ const Carousel = () => {
         }}
         navigation
         pagination={{ clickable: true }}
+        onSlideChange={(swiper) => setActiveIndex(swiper.activeIndex)}
         style={{ width: "100%", height: "100%" }}
       >
         {images.map((image, index) => (
@@ -41,16 +74,32 @@ const Carousel = () => {
                 backgroundImage: `url(${image.src})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
                 width: "100%",
                 height: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                color: "#fff",
-                textShadow: "2px 2px 10px rgba(0, 0, 0, 0.7)",
               }}
+              className="flex items-start p-4 md:p-6 lg:p-8"
             >
-              <h1>{image.caption}</h1>
+              <div className="w-[70%] md:w-[40%] xl:py-0 2xl:py-12">
+                {/* Heading */}
+                <h1
+                  className={`image-caption text-base sm:text-xl md:text-3xl xl:text-5xl font-bold ${
+                    activeIndex === index ? "slide-in" : ""
+                  }`}
+                >
+                  {image.heading}
+                </h1>
+                {/* Subheading */}
+                <div className="mt-2">
+                  <h4
+                    className={`image-subheading text-sm sm:text-base hidden sm:block md:text-sm xl:text-xl ${
+                      activeIndex === index ? "slide-in" : ""
+                    }`}
+                  >
+                    {image.subheading}
+                  </h4>
+                </div>
+              </div>
             </div>
           </SwiperSlide>
         ))}

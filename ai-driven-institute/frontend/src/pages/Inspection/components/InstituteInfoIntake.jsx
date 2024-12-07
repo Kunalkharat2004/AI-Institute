@@ -78,7 +78,7 @@ const InstituteInfoIntake = () => {
             id="aicteZone"
             value={aicteZone}
             onChange={(e) => handleFieldChange("aicteZone", e.target.value)}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           >
             <option value="">Select AICTE Zone</option>
             <option value="east">East</option>
@@ -95,7 +95,7 @@ const InstituteInfoIntake = () => {
             id="instituteType"
             value={instituteType}
             onChange={(e) => handleFieldChange("instituteType", e.target.value)}
-            className="border rounded p-2 w-full"
+            className="border rounded p-2 w-full bg-[#c2c2ff]"
           >
             <option value="">Select Institute Type</option>
             <option value="autonomous">Autonomous</option>
@@ -124,7 +124,7 @@ const InstituteInfoIntake = () => {
                 <td className="border">
                   <input
                     type="text"
-                    className="w-full p-2"
+                    className="w-full p-2 bg-[#c2c2ff]"
                     placeholder="Branch"
                     value={row.branch}
                     onChange={(e) =>
@@ -135,7 +135,7 @@ const InstituteInfoIntake = () => {
                 <td className="border">
                   <input
                     type="number"
-                    className="w-full p-2"
+                    className="w-full p-2 bg-[#c2c2ff]"
                     placeholder="UG"
                     value={row.ug}
                     onChange={(e) => handleRowChange(index, "ug", e.target.value)}
@@ -144,7 +144,7 @@ const InstituteInfoIntake = () => {
                 <td className="border">
                   <input
                     type="number"
-                    className="w-full p-2"
+                    className="w-full p-2 bg-[#c2c2ff]"
                     placeholder="PG"
                     value={row.pg}
                     onChange={(e) => handleRowChange(index, "pg", e.target.value)}

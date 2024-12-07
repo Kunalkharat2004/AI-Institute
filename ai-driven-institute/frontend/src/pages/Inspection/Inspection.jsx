@@ -19,6 +19,8 @@ import { useQuery } from "@tanstack/react-query";
 import useTokenStore from "../../store/userTokenStore";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import University from "./components/University";
+import PrincipalDetails from "./components/PrincipleDetails";
 
 const InspectionPage = () => {
 
@@ -40,6 +42,8 @@ const InspectionPage = () => {
         if (!hasFetchedData) {
           setOpenDialog(true); // Open dialog
         }
+      }else{
+        setOpenDialog(false);
       }
       return response; // Return the response
     },
@@ -104,7 +108,9 @@ const InspectionPage = () => {
             <ProfilePicture />
             <InstituteDetails />
           </div>
+          <University/>
           <InstituteTrust />
+          <PrincipalDetails/>
           <RegistrationSPOC />
           <InstituteInfoIntake />
           <FinancialManagement />
