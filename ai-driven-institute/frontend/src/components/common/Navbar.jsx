@@ -28,7 +28,7 @@ import { jwtDecode } from "jwt-decode";
 const pages = [
 	{ name: "Home", path: "/home" },
 	{ name: "Handbook", path: "https://aicte-india.org/sites/default/files/approval/APH%20Final.pdf" },
-	{ name: "Inspection", path: "/inspection" },
+	{ name: "Inspection", path: "/inspection/timeline/form" },
 	{ name: "FAQ", path: "/faq" },
 	{ name: "Feedback", path: "/feedback" },
 	{ name: "Contact", path: "/contact" },

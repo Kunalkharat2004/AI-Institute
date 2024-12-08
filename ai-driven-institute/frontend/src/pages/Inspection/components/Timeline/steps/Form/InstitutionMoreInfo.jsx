@@ -1,5 +1,3 @@
-import React from "react";
-
 const InstitutionMoreInfo = () => {
   return (
     <div className="bg-white p-4 shadow-md rounded-lg">

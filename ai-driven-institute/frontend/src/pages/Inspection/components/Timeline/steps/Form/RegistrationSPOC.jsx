@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import useInstituteStore from "../../../store/useInstituteStore";
+import useInstituteStore from "../../../../../../store/useInstituteStore";
 
 const RegistrationSPOC = () => {
   const { instituteData, updateRegistrationSPOC } = useInstituteStore(); // Zustand store

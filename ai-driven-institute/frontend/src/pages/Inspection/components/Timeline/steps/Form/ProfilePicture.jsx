@@ -1,6 +1,5 @@
 import { Avatar } from "@mui/material";
-import React from "react";
-import useTokenStore from "../../../store/userTokenStore";
+import useTokenStore from "../../../../../../store/userTokenStore";
 import {jwtDecode} from "jwt-decode";
 
 const ProfilePicture = () => {

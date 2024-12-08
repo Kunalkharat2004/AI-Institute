@@ -22,7 +22,14 @@ import PaymentPage from "./pages/Payment/PaymentForm.jsx";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import config from "./config/config.js";
-import "./global.css";  
+import { useEffect } from "react";
+import "./global.css";
+import Timeline from "./pages/Inspection/components/Timeline/Timeline.jsx";
+import Form from "./pages/Inspection/components/Timeline/steps/Form/Form.jsx";
+import FacilityInspection from "./pages/Inspection/components/Timeline/steps/FacilityInspection.jsx";
+import Infrastructure from "./pages/Inspection/components/Timeline/steps/Infrastructure.jsx";
+import CurriculumInspection from "./pages/Inspection/components/Timeline/steps/CurriculumInspection.jsx";
+import DocumentAnalysis from "./pages/Inspection/components/Timeline/steps/DocumentAnalysis.jsx";
 
 const theme = createTheme();
 const queryClient = new QueryClient();
@@ -38,11 +45,28 @@ const router = createBrowserRouter([
       { path: "contact", element: <Contact /> },
       { path: "feedback", element: <FeedbackPage /> },
       { path: "payment", element: <PaymentPage /> },
-      { path: "inspection", element: <InspectionPage /> },
       { path: "/", element: <HomePage />, index: true },
       {
         path: "/dashboard",
         element: <UserDashboardPage />,
+      },
+      {
+        path: "/inspection",
+        element: <InspectionPage />,
+        children: [
+          {
+            path: "timeline",
+            element: <Timeline />,
+            children: [
+              { path: "form", element: <Form />, index: true },
+              { path: "facility-inspection", element: <FacilityInspection /> },
+              { path: "campus-infrastructure", element: <Infrastructure /> },
+              { path: "curriculum-inspection", element: <CurriculumInspection /> },
+              { path: "document-analysis", element: <DocumentAnalysis /> },
+              // Add more routes for other timeline components
+            ],
+          },
+        ],
       },
     ],
   },
@@ -59,9 +83,54 @@ const router = createBrowserRouter([
     path: "/admin/dashboard",
     element: <AdminDashboard />,
   },
+
 ]);
 
+// Utility function to load external scripts with a callback
+const loadScript = (src, id, isAsync = true, callback) => {
+  if (!document.getElementById(id)) {
+    const script = document.createElement("script");
+    script.src = src;
+    script.id = id;
+    script.async = isAsync;
+
+    // Set the callback when the script is loaded
+    script.onload = () => {
+      if (callback) callback();
+    };
+
+    script.onerror = () => {
+      console.error(`Error loading script: ${src}`);
+    };
+
+    document.body.appendChild(script);
+  } else if (callback) {
+    // If the script already exists, call the callback immediately
+    callback();
+  }
+};
+
 const App = () => {
+  useEffect(() => {
+    // Load chatbot scripts sequentially
+    loadScript(
+      "https://cdn.botpress.cloud/webchat/v2.2/inject.js",
+      "botpress-inject",
+      true,
+      () => {
+        // Load the custom script after the main Botpress script is loaded
+        loadScript(
+          "https://files.bpcontent.cloud/2024/12/08/13/20241208135325-JZU5LP0V.js",
+          "botpress-custom-script",
+          true,
+          () => {
+            console.log("Chatbot scripts loaded successfully!");
+          }
+        );
+      }
+    );
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <MuiThemeProvider theme={theme}>

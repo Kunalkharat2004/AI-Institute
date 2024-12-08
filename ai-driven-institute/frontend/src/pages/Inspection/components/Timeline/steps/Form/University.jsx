@@ -1,5 +1,5 @@
 import  { useEffect, useState } from "react";
-import useInstituteStore from "../../../store/useInstituteStore";
+import useInstituteStore from "../../../../../../store/useInstituteStore";
 
 const University = () => {
   const { instituteData, updateUniversity } = useInstituteStore(); // Zustand store to get data

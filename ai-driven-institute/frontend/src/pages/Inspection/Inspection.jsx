@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import useInstituteStore from "../../store/useInstituteStore";
 import {
   Dialog,
@@ -7,67 +7,57 @@ import {
   DialogTitle,
   Button,
 } from "@mui/material";
-import ProfilePicture from "./components/ProfilePicture";
-import InstituteDetails from "./components/InstitutionDetails";
-import InstituteTrust from "./components/InstituteTrust";
-import RegistrationSPOC from "./components/RegistrationSPOC";
-import InstituteInfoIntake from "./components/InstituteInfoIntake";
-import FinancialManagement from "./components/FinancialManagement";
-import Timeline from "./components/Timeline";
 import { fetchInstituteDetails } from "../../http/api"; // API function
 import { useQuery } from "@tanstack/react-query";
 import useTokenStore from "../../store/userTokenStore";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import University from "./components/University";
-import PrincipalDetails from "./components/PrincipleDetails";
+import { useNavigate, Outlet } from "react-router-dom";
+import Timeline from "./components/Timeline/Timeline";
 
 const InspectionPage = () => {
-
-  const {setHasfetchData,hasFetchedData,paymentStatus} = useTokenStore()
+  const { setHasfetchData, hasFetchedData, paymentStatus } = useTokenStore();
   const navigate = useNavigate();
 
   const [openDialog, setOpenDialog] = useState(false); // Dialog state
-  const { instituteData, setInstituteData } = useInstituteStore(); // Zustand store
+  const {  setInstituteData } = useInstituteStore(); // Zustand store
+
   // Fetch data using React Query
-  const { data, isLoading, error } = useQuery({
+  const { isLoading, error } = useQuery({
     queryKey: ["instituteDetails"], // Unique query key
     queryFn: async () => {
       const response = await fetchInstituteDetails();
       if (response.data.institutionData) {
-        console.log(response.data.institutionData);
-        setInstituteData(response.data.institutionData); // Set the data in the store
+        setInstituteData(response.data.institutionData);
 
         // Show dialog only if user hasn't already fetched data
         if (!hasFetchedData) {
           setOpenDialog(true); // Open dialog
         }
-      }else{
+      } else {
         setOpenDialog(false);
       }
       return response; // Return the response
     },
   });
 
-  useEffect(()=>{
-    if(!paymentStatus){
-      toast.error("Please complete payment to proceed.",{
+  useEffect(() => {
+    if (!paymentStatus) {
+      toast.error("Please complete payment to proceed.", {
         autoClose: 4000,
       });
-      navigate("/payment")
+      navigate("/payment");
     }
-  },[paymentStatus,navigate])
+  }, [paymentStatus, navigate]);
 
   useEffect(() => {
-    // Check if the user has already fetched data
     if (hasFetchedData) {
       setOpenDialog(false);
     }
-  }, []);
+  }, [hasFetchedData]);
 
   const handleFetchData = () => {
     setOpenDialog(false); // Close dialog
-    setHasfetchData(true)
+    setHasfetchData(true);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -102,19 +92,7 @@ const InspectionPage = () => {
 
       {/* Main Content */}
       <div className="min-h-screen bg-gray-100 p-4">
-        <Timeline />
-        <div className="p-8 space-y-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            <ProfilePicture />
-            <InstituteDetails />
-          </div>
-          <University/>
-          <InstituteTrust />
-          <PrincipalDetails/>
-          <RegistrationSPOC />
-          <InstituteInfoIntake />
-          <FinancialManagement />
-        </div>
+          <Outlet /> {/* Dynamic rendering of child components */}
       </div>
     </div>
   );

@@ -54,6 +54,7 @@ const FeedbackPage = () => {
 			console.log("Response Status: ", response.status);
 	  
 			if (response.status === 200) {
+				setFeedback("")
 			  toast.success("Feedback submitted successfully", {
 				autoClose: 4000,
 			  });
