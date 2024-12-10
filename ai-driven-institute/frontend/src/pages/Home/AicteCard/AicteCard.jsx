@@ -47,6 +47,7 @@ const AicteCard = () => {
           <span>Welcome to </span>
           <span className="text-red-500 ml-2">AICTE!</span>
         </h1>
+        <p className="text-2xl font-bold mt-2 text-orange-500">योगः कर्मसु कौशलम्</p>
       </div>
 
       {/* Content Section */}

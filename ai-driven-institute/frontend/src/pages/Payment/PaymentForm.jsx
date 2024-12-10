@@ -29,7 +29,7 @@ const PaymentForm = ({ clientSecret }) => {
       const result = await stripe.confirmPayment({
         elements,
         confirmParams: {
-          return_url: "http://localhost:5173/inspection", // Replace with your desired redirect URL
+          return_url: "http://localhost:5173/inspection/timeline/form", // Replace with your desired redirect URL
         },
         redirect: "if_required",
       });
@@ -45,7 +45,7 @@ const PaymentForm = ({ clientSecret }) => {
         setPaymentStatus(true); // Update Zustand store
         const receiptUrl = data.data.receiptUrl;
        window.open(receiptUrl,"_blank")
-        navigate("/inspection");
+        navigate("/inspection/timeline/form");
       } else if (result.paymentIntent && result.paymentIntent.status === "requires_action") {
         toast.info("Additional action is required to complete the payment.");
       }

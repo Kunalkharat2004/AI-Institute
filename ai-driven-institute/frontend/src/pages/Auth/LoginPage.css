@@ -1,0 +1,18 @@
+@keyframes colorChange {
+    0%, 25% {
+      color: red;
+    }
+    50% {
+      color: orange;
+    }
+    75% {
+      color: yellow;
+    }
+    100% {
+      color: cyan;
+    }
+}
+  
+.animate-color-change {
+    animation: colorChange 2s infinite;
+}

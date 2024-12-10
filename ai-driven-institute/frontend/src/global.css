@@ -1,6 +1,6 @@
 /* globals.css */
 body.light-mode {
-  @apply bg-[#fafaf5] text-gray-900; /* Light mode background and text color */
+  @apply bg-[#fcfbfa] text-gray-900; /* Light mode background and text color */
 }
 
 body.dark-mode {

@@ -16,7 +16,7 @@ import {  useNavigate } from "react-router-dom";
 import AicteLgLogo from "../../assets/image/aicte-logo.png";
 import AicteSmLogo from "../../assets/image/aicte-sm-logo.png";
 import DigitalIndiaLogo from "../../assets/image/digital-india-logo.png";
-import SIHLogo from "../../assets/image/SIH-Logo.png";
+import SIHLogo from "../../assets/image/sih_2024_logo2.png";
 import sun from "../../assets/image/sun.png"; // Import sun icon
 import moon from "../../assets/image/moon.png"; // Import moon icon
 import { useMediaQuery } from "@mui/material";
@@ -30,6 +30,7 @@ const pages = [
 	{ name: "Handbook", path: "https://aicte-india.org/sites/default/files/approval/APH%20Final.pdf" },
 	{ name: "Inspection", path: "/inspection/timeline/form" },
 	{ name: "FAQ", path: "/faq" },
+	{ name: "AI Assistant", path: "https://cdn.botpress.cloud/webchat/v2.2/shareable.html?configUrl=https://files.bpcontent.cloud/2024/12/08/13/20241208135325-9430ATBC.json" },
 	{ name: "Feedback", path: "/feedback" },
 	{ name: "Contact", path: "/contact" },
 ];
@@ -70,9 +71,10 @@ const Navbar = () => {
 	const navigate = useNavigate();
 
 	const handleMenuClick = (page)=>{
-		if(page.name === "Handbook"){
+		if(page.name === "Handbook" || page.name === "AI Assistant"){
 			window.open(page.path, "_blank","noopener,noreferrer");
-		}else{
+		}
+		else{
 			navigate(page.path);
 		}
 		handleCloseNavMenu();
@@ -122,7 +124,7 @@ const Navbar = () => {
 		<AppBar
 			position="sticky"
 			sx={{
-				backgroundColor: theme === "light" ? "#1C1C9B" : "black",
+				backgroundColor: theme === "light" ? "#0B2F9F" : "black",
 				boxShadow: "none",
 				borderBottom: "1px solid #E0E0E0"
 			}}
@@ -151,12 +153,12 @@ const Navbar = () => {
 							<img
 								src={SIHLogo}
 								alt="SIH Logo"
-								className="h-8 md:h-12 w-auto"
+								className="h-8 md:h-10 w-auto"
 							/>
 								<img
 									src={DigitalIndiaLogo}
 									alt="CGWB Logo"
-									className="h-8 md:h-10 w-auto"
+									className="h-8 md:h-14 w-auto"
 								/>
 							{isLargeScreen?(
 								<img
@@ -245,7 +247,7 @@ const Navbar = () => {
 							<img
 								src={SIHLogo}
 								alt="SIH Logo"
-								className="h-8 md:h-12 w-auto"
+								className="h-8 md:h-4 w-auto"
 							/>
 								<img
 									src={DigitalIndiaLogo}

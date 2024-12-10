@@ -15,7 +15,7 @@ const InspectionContainer = () => {
 	const navigate = useNavigate();
 
 	const handleButtonClick = () => {
-		return navigate("/inspection");
+		return navigate("/inspection/timeline/form");
 	};
 
 	return (

@@ -10,7 +10,6 @@ export const userController = {
     registerUser: async (req: Request, res: Response, next: NextFunction) => {
         try {
                 const {email,password} = req.body;
-
             // Check if the email is already registered
             try{
 
