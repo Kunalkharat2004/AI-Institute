@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useInstituteStore from "../../../../../../store/useInstituteStore";
 
 const InstituteTrust = () => {
@@ -6,8 +6,8 @@ const InstituteTrust = () => {
   const [trustData, setTrustData] = useState({
     trustName: "",
     establishmentYear: "",
-    trustRegistrationNo:"",
-    trustAddress:""
+    trustRegistrationNo: "",
+    trustAddress: "",
   });
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const InstituteTrust = () => {
   return (
     <div className="bg-white p-4 shadow-md rounded-lg">
       <h2 className="text-lg font-bold mb-4">Institute Trust</h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="trustRegistrationNo" className="block font-medium mb-1">
             Trust ID

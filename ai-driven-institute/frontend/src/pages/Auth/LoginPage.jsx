@@ -62,6 +62,8 @@ const Login = () => {
     if (email === "admin@gmail.com" && password === "admin") {
       localStorage.setItem("auth-token", "admin");
       navigate("/admin/dashboard");
+      console.log("Admin logged in");
+      
     }
 
     mutation.mutate({ email, password });
@@ -88,7 +90,7 @@ const Login = () => {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-16 mt-20 ml-10">
           {/* Left Section */}
 		  <div
-            className="md:col-span-8 bg-transparent rounded-lg flex flex-col items-start shadow-cyan-200 mt-3 p-2"
+            className="md:col-span-8 bg-transparent rounded-lg flex flex-col items-center shadow-cyan-200 mt-3 p-2"
             style={{
               boxShadow: `
                 0 0 15px rgba(142, 216, 229, 0.5),

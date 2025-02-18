@@ -44,16 +44,16 @@ export default function SessionsChart() {
   const data = getDaysInMonth(4, 2024);
 
   const colorPalette = [
-    theme.palette.primary.light,
     theme.palette.primary.main,
-    theme.palette.primary.dark,
+    theme.palette.secondary.main,
+    theme.palette.error.light,
   ];
 
   return (
     <Card variant="outlined" sx={{ width: '100%' }}>
       <CardContent>
         <Typography component="h2" variant="subtitle2" gutterBottom>
-          Sessions
+          Inspection Performance
         </Typography>
         <Stack sx={{ justifyContent: 'space-between' }}>
           <Stack
@@ -65,12 +65,12 @@ export default function SessionsChart() {
             }}
           >
             <Typography variant="h4" component="p">
-              13,277
+              18,342
             </Typography>
-            <Chip size="small" color="success" label="+35%" />
+            <Chip size="small" color="primary" label="+45%" />
           </Stack>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            Sessions per day for the last 30 days
+            Metrics for the last 30 days
           </Typography>
         </Stack>
         <LineChart
@@ -84,60 +84,60 @@ export default function SessionsChart() {
           ]}
           series={[
             {
-              id: 'direct',
-              label: 'Direct',
+              id: 'facility-assessments',
+              label: 'Facility Assessments',
               showMark: false,
               curve: 'linear',
               stack: 'total',
               area: true,
               stackOrder: 'ascending',
               data: [
-                300, 900, 600, 1200, 1500, 1800, 2400, 2100, 2700, 3000, 1800, 3300,
-                3600, 3900, 4200, 4500, 3900, 4800, 5100, 5400, 4800, 5700, 6000,
-                6300, 6600, 6900, 7200, 7500, 7800, 8100,
+                300, 250, 400, 350, 450, 300, 500, 450, 400, 550, 500, 600, 700, 650,
+                600, 700, 750, 800, 850, 750, 900, 950, 1000, 1100, 1200, 1150, 1300,
+                1400, 1500, 1550,
               ],
             },
             {
-              id: 'referral',
-              label: 'Referral',
+              id: 'document-checks',
+              label: 'Document Checks',
               showMark: false,
               curve: 'linear',
               stack: 'total',
               area: true,
               stackOrder: 'ascending',
               data: [
-                500, 900, 700, 1400, 1100, 1700, 2300, 2000, 2600, 2900, 2300, 3200,
-                3500, 3800, 4100, 4400, 2900, 4700, 5000, 5300, 5600, 5900, 6200,
-                6500, 5600, 6800, 7100, 7400, 7700, 8000,
+                200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800, 850,
+                900, 950, 1000, 1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400, 1450,
+                1500, 1550, 1600, 1650,
               ],
             },
             {
-              id: 'organic',
-              label: 'Organic',
+              id: 'ai-suggested-improvements',
+              label: 'AI-Suggested Improvements',
               showMark: false,
               curve: 'linear',
               stack: 'total',
+              area: true,
               stackOrder: 'ascending',
               data: [
-                1000, 1500, 1200, 1700, 1300, 2000, 2400, 2200, 2600, 2800, 2500,
-                3000, 3400, 3700, 3200, 3900, 4100, 3500, 4300, 4500, 4000, 4700,
-                5000, 5200, 4800, 5400, 5600, 5900, 6100, 6300,
+                150, 200, 250, 300, 350, 400, 450, 500, 550, 600, 650, 700, 750, 800,
+                850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400,
+                1450, 1500, 1550, 1600,
               ],
-              area: true,
             },
           ]}
           height={250}
           margin={{ left: 50, right: 20, top: 20, bottom: 20 }}
           grid={{ horizontal: true }}
           sx={{
-            '& .MuiAreaElement-series-organic': {
-              fill: "url('#organic')",
+            '& .MuiAreaElement-series-facility-assessments': {
+              fill: "url('#facility-assessments')",
             },
-            '& .MuiAreaElement-series-referral': {
-              fill: "url('#referral')",
+            '& .MuiAreaElement-series-document-checks': {
+              fill: "url('#document-checks')",
             },
-            '& .MuiAreaElement-series-direct': {
-              fill: "url('#direct')",
+            '& .MuiAreaElement-series-ai-suggested-improvements': {
+              fill: "url('#ai-suggested-improvements')",
             },
           }}
           slotProps={{
@@ -146,9 +146,9 @@ export default function SessionsChart() {
             },
           }}
         >
-          <AreaGradient color={theme.palette.primary.dark} id="organic" />
-          <AreaGradient color={theme.palette.primary.main} id="referral" />
-          <AreaGradient color={theme.palette.primary.light} id="direct" />
+          <AreaGradient color={theme.palette.primary.main} id="facility-assessments" />
+          <AreaGradient color={theme.palette.secondary.main} id="document-checks" />
+          <AreaGradient color={theme.palette.error.light} id="ai-suggested-improvements" />
         </LineChart>
       </CardContent>
     </Card>

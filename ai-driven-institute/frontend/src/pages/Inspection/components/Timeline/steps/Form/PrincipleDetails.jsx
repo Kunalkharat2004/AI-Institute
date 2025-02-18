@@ -27,17 +27,17 @@ const PrincipalDetails = () => {
 
   const handleChange = (e) => {
     const { id, value, type } = e.target;
-  
+
     // Parse radio button values to boolean
     const parsedValue = type === "radio" ? value === "true" : value;
-  
+
     // Update local state
     setPrincipalData((prev) => {
       const updatedData = { ...prev, [id]: parsedValue };
-  
+
       // Update Zustand store
       updateprincipalData(updatedData);
-  
+
       return updatedData;
     });
   };
@@ -45,7 +45,7 @@ const PrincipalDetails = () => {
   return (
     <div className="bg-white p-4 shadow-md rounded-lg">
       <h2 className="text-lg font-bold mb-4">Principal Details</h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="principalName" className="block font-medium mb-1">
             Principal Name
@@ -119,38 +119,36 @@ const PrincipalDetails = () => {
           />
         </div>
         <div>
-  <label htmlFor="isDoctorDegree" className="block font-medium mb-2">
-    Is Doctor
-  </label>
-  <div className="flex items-center space-x-4">
-    <label className="flex items-center space-x-2">
-      <input
-        id="isDoctorDegree"
-        name="isDoctorDegree"
-        type="radio"
-        value="true"
-        checked={principalData.isDoctorDegree === true}
-        onChange={handleChange}
-        className="border rounded p-2 text-blue-600"
-      />
-      <span>Yes</span>
-    </label>
-    <label className="flex items-center space-x-2">
-      <input
-        id="isDoctorDegree"
-        name="isDoctorDegree"
-        type="radio"
-        value="false"
-        checked={principalData.isDoctorDegree === false}
-        onChange={handleChange}
-        className="border rounded p-2 text-red-600"
-      />
-      <span>No</span>
-    </label>
-  </div>
-</div>
-
-
+          <label htmlFor="isDoctorDegree" className="block font-medium mb-2">
+            Is Doctor
+          </label>
+          <div className="flex items-center space-x-4">
+            <label className="flex items-center space-x-2">
+              <input
+                id="isDoctorDegree"
+                name="isDoctorDegree"
+                type="radio"
+                value="true"
+                checked={principalData.isDoctorDegree === true}
+                onChange={handleChange}
+                className="text-blue-600"
+              />
+              <span>Yes</span>
+            </label>
+            <label className="flex items-center space-x-2">
+              <input
+                id="isDoctorDegree"
+                name="isDoctorDegree"
+                type="radio"
+                value="false"
+                checked={principalData.isDoctorDegree === false}
+                onChange={handleChange}
+                className="text-red-600"
+              />
+              <span>No</span>
+            </label>
+          </div>
+        </div>
       </div>
     </div>
   );

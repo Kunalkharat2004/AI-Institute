@@ -9,9 +9,9 @@ import FinancialManagement from './FinancialManagement'
 
 const Form = () => {
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div className="min-h-screen bg-gray-100 p-2 md:p-4">
         <div className="p-8 space-y-8">
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 justify-center gap-8">
             <ProfilePicture />
             <InstituteDetails />
           </div>

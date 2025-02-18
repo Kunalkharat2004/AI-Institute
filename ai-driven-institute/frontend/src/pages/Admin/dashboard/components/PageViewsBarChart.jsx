@@ -10,16 +10,16 @@ import { useTheme } from '@mui/material/styles';
 export default function PageViewsBarChart() {
   const theme = useTheme();
   const colorPalette = [
-    (theme.vars || theme).palette.primary.dark,
-    (theme.vars || theme).palette.primary.main,
-    (theme.vars || theme).palette.primary.light,
+    theme.palette.primary.main,
+    theme.palette.warning.dark,
+    theme.palette.error.light,
   ];
 
   return (
     <Card variant="outlined" sx={{ width: '100%' }}>
       <CardContent>
         <Typography component="h2" variant="subtitle2" gutterBottom>
-          Page views and downloads
+          Inspection Metrics
         </Typography>
         <Stack sx={{ justifyContent: 'space-between' }}>
           <Stack
@@ -31,12 +31,12 @@ export default function PageViewsBarChart() {
             }}
           >
             <Typography variant="h4" component="p">
-              1.3M
+              1.8M
             </Typography>
-            <Chip size="small" color="error" label="-8%" />
+            <Chip size="small" color="error" label="-5%" />
           </Stack>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            Page views and downloads for the last 6 months
+            Metrics for inspections and evaluations over the last 6 months
           </Typography>
         </Stack>
         <BarChart
@@ -46,26 +46,26 @@ export default function PageViewsBarChart() {
             {
               scaleType: 'band',
               categoryGapRatio: 0.5,
-              data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+              data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
             },
           ]}
           series={[
             {
-              id: 'page-views',
-              label: 'Page views',
-              data: [2234, 3872, 2998, 4125, 3357, 2789, 2998],
+              id: 'infrastructure',
+              label: 'Infrastructure Checks',
+              data: [3450, 3780, 3650, 3900, 4200, 4000],
               stack: 'A',
             },
             {
-              id: 'downloads',
-              label: 'Downloads',
-              data: [3098, 4215, 2384, 2101, 4752, 3593, 2384],
+              id: 'faculty',
+              label: 'Faculty Evaluations',
+              data: [2900, 3200, 3100, 3400, 3600, 3500],
               stack: 'A',
             },
             {
-              id: 'conversions',
-              label: 'Conversions',
-              data: [4051, 2275, 3129, 4693, 3904, 2038, 2275],
+              id: 'compliance',
+              label: 'Regulatory Compliance',
+              data: [3100, 3400, 3300, 3700, 3900, 3800],
               stack: 'A',
             },
           ]}

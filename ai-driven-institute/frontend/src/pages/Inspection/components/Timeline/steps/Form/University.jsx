@@ -1,18 +1,18 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useInstituteStore from "../../../../../../store/useInstituteStore";
 
 const University = () => {
   const { instituteData, updateUniversity } = useInstituteStore(); // Zustand store to get data
   const [universityData, setUniversityData] = useState({
-    universityName:"",
-    universityCode:""
+    universityName: "",
+    universityCode: "",
   });
 
   useEffect(() => {
     if (instituteData?.instituteTrust) {
-        setUniversityData({
-        universityName: instituteData.university.universityName || "", // Ensure a default value
-        universityCode: instituteData.university.universityCode || "", // Ensure a default value
+      setUniversityData({
+        universityName: instituteData.university?.universityName || "", // Ensure a default value
+        universityCode: instituteData.university?.universityCode || "", // Ensure a default value
       });
     }
   }, [instituteData]);
@@ -26,7 +26,7 @@ const University = () => {
   return (
     <div className="bg-white p-4 shadow-md rounded-lg">
       <h2 className="text-lg font-bold mb-4">University</h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="universityName" className="block font-medium mb-1">
             University Name

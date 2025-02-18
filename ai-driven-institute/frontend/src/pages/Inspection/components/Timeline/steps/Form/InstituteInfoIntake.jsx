@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useInstituteStore from "../../../../../../store/useInstituteStore";
 
 const InstituteInfoIntake = () => {
@@ -69,7 +69,7 @@ const InstituteInfoIntake = () => {
   return (
     <div className="bg-white p-4 shadow-md rounded-lg">
       <h2 className="text-lg font-bold mb-4">Institute Info & Intake</h2>
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <div>
           <label htmlFor="aicteZone" className="block font-medium mb-1">
             AICTE Zone
@@ -110,56 +110,58 @@ const InstituteInfoIntake = () => {
         <label htmlFor="instituteIntake" className="block font-medium mb-1">
           Institute Intake
         </label>
-        <table className="w-full border rounded">
-          <thead>
-            <tr>
-              <th className="border px-2 py-1">Branch</th>
-              <th className="border px-2 py-1">UG</th>
-              <th className="border px-2 py-1">PG</th>
-            </tr>
-          </thead>
-          <tbody>
-            {intakeRows.map((row, index) => (
-              <tr key={index}>
-                <td className="border">
-                  <input
-                    type="text"
-                    className="w-full p-2 bg-[#c2c2ff]"
-                    placeholder="Branch"
-                    value={row.branch}
-                    onChange={(e) =>
-                      handleRowChange(index, "branch", e.target.value)
-                    }
-                  />
-                </td>
-                <td className="border">
-                  <input
-                    type="number"
-                    className="w-full p-2 bg-[#c2c2ff]"
-                    placeholder="UG"
-                    value={row.ug}
-                    onChange={(e) => handleRowChange(index, "ug", e.target.value)}
-                  />
-                </td>
-                <td className="border">
-                  <input
-                    type="number"
-                    className="w-full p-2 bg-[#c2c2ff]"
-                    placeholder="PG"
-                    value={row.pg}
-                    onChange={(e) => handleRowChange(index, "pg", e.target.value)}
-                  />
-                </td>
+        <div className="overflow-x-auto">
+          <table className="w-full border rounded">
+            <thead>
+              <tr>
+                <th className="border px-2 py-1">Branch</th>
+                <th className="border px-2 py-1">UG</th>
+                <th className="border px-2 py-1">PG</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {intakeRows.map((row, index) => (
+                <tr key={index}>
+                  <td className="border">
+                    <input
+                      type="text"
+                      className="w-full p-2 bg-[#c2c2ff]"
+                      placeholder="Branch"
+                      value={row.branch}
+                      onChange={(e) =>
+                        handleRowChange(index, "branch", e.target.value)
+                      }
+                    />
+                  </td>
+                  <td className="border">
+                    <input
+                      type="number"
+                      className="w-full p-2 bg-[#c2c2ff]"
+                      placeholder="UG"
+                      value={row.ug}
+                      onChange={(e) => handleRowChange(index, "ug", e.target.value)}
+                    />
+                  </td>
+                  <td className="border">
+                    <input
+                      type="number"
+                      className="w-full p-2 bg-[#c2c2ff]"
+                      placeholder="PG"
+                      value={row.pg}
+                      onChange={(e) => handleRowChange(index, "pg", e.target.value)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       {error && <p className="text-red-500 mt-2">{error}</p>}
       <button
         type="button"
         onClick={addRow}
-        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
+        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
       >
         Add Row
       </button>

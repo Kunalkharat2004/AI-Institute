@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useInstituteStore from "../../../../../../store/useInstituteStore";
 
 const InstituteDetails = () => {
@@ -6,7 +6,7 @@ const InstituteDetails = () => {
   const [formData, setFormData] = useState({
     instituteName: "",
     address: "",
-    date:"",
+    date: "",
     academicYear: "",
     state: "",
     district: "",
@@ -36,7 +36,7 @@ const InstituteDetails = () => {
   return (
     <div className="bg-white p-4 shadow-md rounded-lg">
       <h2 className="text-lg font-bold mb-4">Institute Details</h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
           <label htmlFor="aisheCode" className="block font-medium mb-1">
             AISHE Code
@@ -147,7 +147,10 @@ const InstituteDetails = () => {
           />
         </div>
         <div>
-          <label htmlFor="collegeEstablishmentYear" className="block font-medium mb-1">
+          <label
+            htmlFor="collegeEstablishmentYear"
+            className="block font-medium mb-1"
+          >
             College Establishment Year
           </label>
           <input

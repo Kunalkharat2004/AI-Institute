@@ -83,7 +83,7 @@ const PaymentForm = ({ clientSecret }) => {
             <span className="animate-spin h-5 w-5 mr-2 border-t-2 border-white rounded-full"></span>
             Processing...
           </div>
-          ):"Pay ₹2000"
+          ):"Pay ₹20000"
         }
       </button>
     </form>
@@ -94,7 +94,7 @@ const PaymentPage = () => {
   const { data: clientSecret, isLoading, isError } = useQuery({
     queryKey: ["clientSecret"],
     queryFn: async () => {
-      const response = await paymentIntent({ amount: 2000 }); // Replace with the appropriate amount
+      const response = await paymentIntent({ amount: 20000 }); // Replace with the appropriate amount
       return response.data.clientSecret;
     },
     retry: false,
@@ -119,7 +119,7 @@ const PaymentPage = () => {
         </h2>
         <p className="text-center text-gray-600 mb-6">
           Pay securely to complete your transaction. Amount:{" "}
-          <span className="font-semibold text-gray-800">₹2000</span>.
+          <span className="font-semibold text-gray-800">₹20000</span>.
         </p>
         <Elements stripe={stripePromise} options={{ clientSecret }}>
           <PaymentForm clientSecret={clientSecret} />

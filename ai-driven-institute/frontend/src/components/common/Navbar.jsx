@@ -17,10 +17,9 @@ import AicteLgLogo from "../../assets/image/aicte-logo.png";
 import AicteSmLogo from "../../assets/image/aicte-sm-logo.png";
 import DigitalIndiaLogo from "../../assets/image/digital-india-logo.png";
 import SIHLogo from "../../assets/image/sih_2024_logo2.png";
-import sun from "../../assets/image/sun.png"; // Import sun icon
-import moon from "../../assets/image/moon.png"; // Import moon icon
+// import sun from "../../assets/image/sun.png"; // Import sun icon
+// import moon from "../../assets/image/moon.png"; // Import moon icon
 import { useMediaQuery } from "@mui/material";
-
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { jwtDecode } from "jwt-decode";
@@ -313,7 +312,7 @@ const Navbar = () => {
 					</Box>
 
 					{/* Theme Toggle Button */}
-					<IconButton
+					{/* <IconButton
 						onClick={toggleTheme}
 						sx={{
 							color: theme === "light" ? "black" : "white",
@@ -329,7 +328,7 @@ const Navbar = () => {
 							}
 							className="w-6 h-6"
 						/>
-					</IconButton>
+					</IconButton> */}
 
 					{/* User Menu */}
 					<Box sx={{ flexGrow: 0 }}>
